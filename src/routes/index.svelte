@@ -1,5 +1,6 @@
 <script>
 	import '../app.css';
+	import Calender from './calender.svelte';
 </script>
 
-<h1 class="text-red-600">hello</h1>
+<Calender></Calender>
