@@ -1,12 +1,14 @@
 <script>
 	import '../app.css';
-	import Clock from './clock.svelte';
-	import Calender from './calender.svelte';
-	import Todo from './todo.svelte';
+	import Clock from '../components/clock.svelte';
+	//import Calender from '../components/today.svelte';
+	//import Todo from '../components/todo.svelte';
+	//import Month from '../components/month.svelte';
+	import Select from '../components/select.svelte';
+import Today from '../components/today.svelte';
 </script>
 <div>
-	<h1>현재시각</h1>
+	<Today/>
 	<Clock/>
-	<Calender/>
 </div>
-<Todo/>
+ <Select/>
