@@ -8,7 +8,8 @@ export const getDates = writable({
 });
 
 export const stateData = writable({
-	monthState: false,
-	dayState: false 
+	monthState: true,
+	dailyState: false,
+	weeklyState: false
 })
 
