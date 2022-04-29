@@ -23,7 +23,7 @@
 <div>
   <button>-</button>
   <h1>{getYear}년 {getMonth}월 {getDay}일</h1>
-  <button on:click={toNextDay}>+</button>
+  <button>+</button>
 </div>
 
 <div>
