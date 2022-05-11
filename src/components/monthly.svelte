@@ -132,6 +132,7 @@
 		padding: 10px 0;
 		background: #eee;
 		margin: 0;
+		margin-left: 14.5px;
 	}
 
 	.days li {
@@ -139,7 +140,7 @@
 		display: inline-block;
 		border: 1px solid black;
 		padding: 9px;
-		width: 11.6%;
+		width: 13.8%;
 		text-align: center;
 		margin-bottom: 1px;
 		font-size: 1.2rem;

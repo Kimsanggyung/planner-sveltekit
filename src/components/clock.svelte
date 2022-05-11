@@ -19,4 +19,4 @@
 
 </script>
 
-<h1>현재시각: {hours}시 {minutes}분 {seconds}초</h1>
+<h1 class="m-0">현재시각: {hours}시 {minutes}분 {seconds}초</h1>

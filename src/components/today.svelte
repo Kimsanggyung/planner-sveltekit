@@ -9,5 +9,8 @@
   }
   
 </script>
-  <button>오늘날짜: {getDate.year}년 {getDate.month}월 {getDate.day}일</button>
+
+<div class="flex items-center justify-center">
+  <button class="text-xl">오늘날짜: {getDate.year}년 {getDate.month}월 {getDate.day}일</button>
+</div>
   
