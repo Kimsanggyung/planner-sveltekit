@@ -44,10 +44,10 @@
 
 </script>
 <main>
-  <div class="grid place-items-center text-xl display: flex;">
-    <button on:click={prevDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">zzzzz</button>
+  <div class="inline-grid text-xl grid-cols-3 w-25">
+    <button on:click={prevDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">Prev</button>
     <sanp>{year}년 {month+1}월 {day}일</sanp>
-    <button on:click={nextDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">zzzzz</button>
+    <button on:click={nextDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">Next</button>
   </div>
   <div>
     <li>00시</li>
