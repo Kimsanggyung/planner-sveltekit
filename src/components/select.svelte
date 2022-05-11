@@ -49,7 +49,8 @@
     })
     if(monthState == true){
       stateData.update(value => {
-        value.monthState = false
+        value.monthState = !value.monthState
+        return value
       })
     }
     if(dailyState == true){
@@ -65,6 +66,18 @@
       value.dailyState = !value.dailyState
       return value
     })
+    if(monthState == true){
+      stateData.update(value => {
+        value.monthState = !value.monthState
+        return value
+      })
+    }
+    if(weeklyState == true){
+      stateData.update(value => {
+      value.dailyState = !value.dailyState
+      return value
+      })
+    }
   } 
 
 
