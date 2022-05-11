@@ -1,23 +1,53 @@
 <script>
 // @ts-nocheck
-
-  import { getDates } from '../store/store'
-  let year;
-  let month;
-  let day;
-
-  getDates.subscribe(value => {
-    year = value.year,
-    month = value.month,
-    day = value.day 
-  })
+  const date = new Date();
+	let	month = date.getMonth();
+	let year = date.getFullYear();
+  let day = date.getDate();
+  
+  const nextDay = () => {
+    const chcekMonth = [1,3,5,7,8,9,12]
+    const result = chcekMonth.find(value => value == month+1)
+		if (result !== undefined && day >= 31 ) {
+			month += 1;
+			return day = 1;
+    }
+    if (result == undefined && day >= 30 ) {
+			month += 1;
+			return day = 1;
+    }
+    if(month >= 11){
+      year += 1;
+      return month = 0;
+    }
+		return day += 1;
+	}
+	
+	const prevDay = () => {
+    const chcekMonth = [1,3,5,7,8,9,12]
+    const result = chcekMonth.find(value => value == month+1)
+    console.log(month, result)
+		if (result !== undefined && day <= 1) {
+			month -= 1;
+			return day = 30;
+		}
+    if (result == undefined && day <= 1) {
+			month -= 1;
+			return day = 31;
+		}
+    if(month <= 0){
+      year -= 1;
+      return month = 12;
+    }
+		return day -= 1;
+	}
 
 </script>
 <main>
-  <div>
-    <button></button>
-    <sanp>{year}년 {month}월 {day}일</sanp>
-    <button></button>
+  <div class="grid place-items-center text-xl display: flex;">
+    <button on:click={prevDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">zzzzz</button>
+    <sanp>{year}년 {month+1}월 {day}일</sanp>
+    <button on:click={nextDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">zzzzz</button>
   </div>
   <div>
     <li>00시</li>
