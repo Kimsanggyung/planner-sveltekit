@@ -50,7 +50,7 @@
     }
     if(getWeekEnd <=1){
       weekMonth -= 1;
-      return getWeekEnd = (getWeekEnd-7)+3
+      return getWeekEnd = (getWeekEnd-7)+31
     }
     getWeekStart -= 7;
     getWeekEnd -= 7;
