@@ -6,8 +6,8 @@
   let day = date.getDate();
   
   const nextDay = () => {
-    const chcekMonth = [1,3,5,7,8,9,12]
-    const result = chcekMonth.find(value => value == month+1)
+    const checkMonth = [1,3,5,7,8,9,12]
+    const result = checkMonth.find(value => value == month+1)
 		if (result !== undefined && day >= 31 ) {
 			month += 1;
 			return day = 1;
@@ -24,8 +24,8 @@
 	}
 	
 	const prevDay = () => {
-    const chcekMonth = [1,3,5,7,8,9,12]
-    const result = chcekMonth.find(value => value == month+1)
+    const checkMonth = [1,3,5,7,8,9,12]
+    const result = checkMonth.find(value => value == month+1)
     console.log(month, result)
 		if (result !== undefined && day <= 1) {
 			month -= 1;
