@@ -65,15 +65,15 @@
     <span class="text-xl font-bolds">{month}.{getWeekStart}-{weekMonth+1}.{getWeekEnd}</span>
     <button on:click={nextWeek} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
   </div>
-  
+
   <table class="text-3xl m-4">
     <tr class="w-40" >
-      <th>일</th>
-      <th>월</th>
-      <th>화</th>
-      <th>수</th>
-      <th>목</th>
-      <th>금</th>
-      <th>토</th>
+      <th>{getWeekStart} 일</th>
+      <th>{getWeekStart+1} 월</th>
+      <th>{getWeekStart+2} 화</th>
+      <th>{getWeekStart+3} 수</th>
+      <th>{getWeekStart+4} 목</th>
+      <th>{getWeekStart+5} 금</th>
+      <th>{getWeekEnd}토  </th>
     </tr>
   </table>
