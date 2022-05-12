@@ -27,11 +27,11 @@
     if(month >=12){
       year+1
     }
-    if(result !== undefined && getWeekStart >= 24){
+    if(getWeekStart >= 24){
       month +=1;
       return getWeekStart = (getWeekStart+7)-31
     }
-    if(result !== undefined && getWeekEnd >= 24){
+    if(getWeekEnd >= 24){
       weekMonth +=1;
       return getWeekEnd = (getWeekEnd+7)-31
     }
@@ -46,9 +46,11 @@
     }
     if(getWeekStart <= 1){
       month -= 1;
+      return getWeekStart = (getWeekStart-7)+31
     }
     if(getWeekEnd <=1){
       weekMonth -= 1;
+      return getWeekEnd = (getWeekEnd-7)+3
     }
     getWeekStart -= 7;
     getWeekEnd -= 7;
