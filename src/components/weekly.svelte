@@ -59,18 +59,21 @@
   
 </script>
 
-<div>
   <div>
-    <div>{year}년</div>
-    <button on:click={prevWeek}>저번주</button>
-    <div>{month}.{getWeekStart}-{weekMonth+1}.{getWeekEnd}</div>
-    <button on:click={nextWeek}>다음주</button>
+    <div class="text-xl">{year}년</div>
+    <button on:click={prevWeek} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
+    <span class="text-xl font-bolds">{month}.{getWeekStart}-{weekMonth+1}.{getWeekEnd}</span>
+    <button on:click={nextWeek} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
   </div>
-  <span>일</span>
-  <span>월</span>
-  <span>화</span>
-  <span>수</span>
-  <span>목</span>
-  <span>금</span>
-  <span>토</span>
-</div>
+  
+  <table class="text-3xl m-4">
+    <tr class="w-40" >
+      <th>일</th>
+      <th>월</th>
+      <th>화</th>
+      <th>수</th>
+      <th>목</th>
+      <th>금</th>
+      <th>토</th>
+    </tr>
+  </table>
