@@ -25,7 +25,7 @@
 
   const viweMonth = () => {
       stateData.update(value => {
-      value.monthState = !value.monthState;
+      value.monthState = true
       return value
     })
     if(weeklyState == true){
@@ -44,7 +44,7 @@
 
   const viweWeekly = () => {
       stateData.update(value => {
-      value.weeklyState = !value.weeklyState
+      value.weeklyState = true
       return value
     })
     if(monthState == true){
@@ -63,7 +63,7 @@
 
   const viweDaily = () => {
     stateData.update(value => {
-      value.dailyState = !value.dailyState
+      value.dailyState = true
       return value
     })
     if(monthState == true){
@@ -74,7 +74,7 @@
     }
     if(weeklyState == true){
       stateData.update(value => {
-      value.dailyState = !value.dailyState
+      value.weeklyState = !value.weeklyState
       return value
       })
     }
