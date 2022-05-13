@@ -12,7 +12,7 @@
 
   let weekMonth = getDate.getMonth();
   let weekDay;
-
+  console.log(date-week);
   const formatDate = (date) => {
     weekDay = date.getDate();
     return (weekDay);
@@ -27,33 +27,49 @@
     if(month >=12){
       year+1
     }
-    if(getWeekStart >= 24){
+    if(result !== undefined && getWeekStart >= 24){
+      month +=1;
+      return getWeekStart = (getWeekStart+7)-30
+    }
+    if(result == undefined && getWeekEnd >= 24){
+      weekMonth +=1;
+      return getWeekEnd = (getWeekEnd+7)-30
+    }
+    if(result == undefined && getWeekStart >= 23){
       month +=1;
       return getWeekStart = (getWeekStart+7)-31
     }
-    if(getWeekEnd >= 24){
+    if(result == undefined && getWeekEnd >= 23){
       weekMonth +=1;
       return getWeekEnd = (getWeekEnd+7)-31
     }
-    getWeekStart+= 7;
-    getWeekEnd += 7;
+    return (getWeekStart+= 7, getWeekEnd += 7)
   }
 
   const prevWeek = () => {
+    const checkMonth = [1,3,5,7,8,10,12]
+    const result = checkMonth.find(check => check == month)
     if(month <=1 ){
       year -=1;
       return month = 12;
     }
-    if(getWeekStart <= 1){
+    if(result !== undefined && getWeekStart <= 1){
+      month -= 1;
+      return getWeekStart = (getWeekStart-7)+30
+    }
+    if(result !== undefined && getWeekEnd <=1){
+      weekMonth -= 1;
+      return getWeekEnd = (getWeekEnd-7)+30
+    }
+    if(result == undefined && getWeekStart <= 1){
       month -= 1;
       return getWeekStart = (getWeekStart-7)+31
     }
-    if(getWeekEnd <=1){
+    if(result == undefined && getWeekEnd <=1){
       weekMonth -= 1;
       return getWeekEnd = (getWeekEnd-7)+31
     }
-    getWeekStart -= 7;
-    getWeekEnd -= 7;
+    return (getWeekStart -= 7, getWeekEnd -= 7)
   }
 
   
