@@ -10,6 +10,7 @@ export const getDates = writable({
 export const stateData = writable({
 	monthState: true,
 	dailyState: false,
-	weeklyState: false
+	weeklyState: false,
+	addTodoState: false
 })
 

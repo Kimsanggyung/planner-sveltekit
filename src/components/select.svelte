@@ -16,10 +16,12 @@
   let monthState;
   let weeklyState;
   let dailyState;
+  let addTodoState
   stateData.subscribe(state => {
     monthState = state.monthState;
     weeklyState = state.weeklyState;
     dailyState = state.dailyState;
+    addTodoState =state.addTodoState
   })
 
 
@@ -78,8 +80,31 @@
       return value
       })
     }
-  } 
+  }
 
+  const viweAddTodo = () => {
+    stateData.update(value => {
+      value.addTodoState = true;
+    })
+    if(monthState == true){
+      stateData.update(value => {
+        value.monthState = !value.monthState
+        return value
+      })
+    }
+    if(weeklyState == true){
+      stateData.update(value => {
+      value.weeklyState = !value.weeklyState
+      return value
+      })
+    }
+    if(dailyState == true){
+      stateData.update(value => {
+      value.dailyState = !value.dailyState
+      return value
+      })
+    }
+  }
 
 </script>
 
@@ -88,3 +113,4 @@
   <button on:click={viweWeekly}>주간</button>
   <button on:click={viweDaily}>일간</button>
 </div>
+<button on:click={viweAddTodo}>일정추가</button>
