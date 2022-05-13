@@ -14,3 +14,11 @@ export const stateData = writable({
 	addTodoState: false
 })
 
+export const todoData = writable({
+	startDay: '',
+	startTime:'',
+	endDay: '',
+	endTime:'',
+	setTodo: '',
+	setDetails: ''
+})
