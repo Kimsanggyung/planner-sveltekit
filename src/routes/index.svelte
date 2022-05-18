@@ -19,7 +19,6 @@
 	let checkTodoState;
 
 	stateData.subscribe(state => {
-		console.log(state)
 		monthState = state.monthState;
 		weeklyState = state.weeklyState;
 		dailyState = state.dailyState;
@@ -27,8 +26,6 @@
 		checkTodoState = state.checkTodoState;
 	})
 	
-	
-	//$: state = monthState
 </script>
 
 <div>
