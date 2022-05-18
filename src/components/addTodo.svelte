@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
   import localforage from 'localforage'
-  import {todoData} from '../store/store'
+  import { db } from '../store/indexed'
   let todo = '';
   let details = '';
   let getDate = new Date();
@@ -16,22 +16,6 @@
 	  setDetails: details,
     setDate: setDate
   }
-
-  const dbReq = indexedDB.open('todoDatas',2)
-  let db;
-  dbReq.addEventListener('success',function(event){
-    console.log('success')
-    db = event.target.result;
-  })
-  dbReq.addEventListener('error',function(event){
-    const error = event.target.error;
-    console.log('erroe',error.name)
-  })
-  dbReq.addEventListener('upgradeneeded',function(event){
-    console.log('upgradeneeded')
-    db = event.target.result;
-    db.createObjectStore('datas',{keyPath:'id',autoIncrement:true})
-  })
 
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
