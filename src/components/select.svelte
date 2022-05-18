@@ -16,12 +16,15 @@
   let monthState;
   let weeklyState;
   let dailyState;
-  let addTodoState
+  let addTodoState;
+  let checkTodoState;
+
   stateData.subscribe(state => {
     monthState = state.monthState;
     weeklyState = state.weeklyState;
     dailyState = state.dailyState;
-    addTodoState =state.addTodoState
+    addTodoState = state.addTodoState;
+    checkTodoState = state.checkTodoState;
   })
 
 
@@ -83,8 +86,35 @@
   }
 
   const viweAddTodo = () => {
+
     stateData.update(value => {
       value.addTodoState = true;
+      return value
+    })
+    if(monthState == true){
+      stateData.update(value => {
+        value.monthState = !value.monthState
+        return value
+      })
+    }
+    if(weeklyState == true){
+      stateData.update(value => {
+      value.weeklyState = !value.weeklyState
+      return value
+      })
+    }
+    if(dailyState == true){
+      stateData.update(value => {
+      value.dailyState = !value.dailyState;
+      return value;
+      })
+    }
+  }
+
+  const viweCheckTodo = () => {
+    stateData.update(value => {
+      value.checkTodoState = true;
+      return value;
     })
     if(monthState == true){
       stateData.update(value => {
@@ -104,6 +134,12 @@
       return value
       })
     }
+    if(addTodoState == true){
+      stateData.update(value => {
+        value.addTodoState = !value.addTodoState
+        return value
+      })
+    }
   }
 
 </script>
@@ -114,3 +150,4 @@
   <button on:click={viweDaily}>일간</button>
 </div>
 <button on:click={viweAddTodo}>일정추가</button>
+<button on:click={viweCheckTodo}>일정확인</button>

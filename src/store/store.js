@@ -11,7 +11,8 @@ export const stateData = writable({
 	monthState: true,
 	dailyState: false,
 	weeklyState: false,
-	addTodoState: false
+	addTodoState: false,
+	checkTodoState: false,
 })
 
 export const todoData = writable({

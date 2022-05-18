@@ -16,12 +16,15 @@
 	let weeklyState;
 	let dailyState;
 	let addTodoState;
+	let checkTodoState;
 
 	stateData.subscribe(state => {
+		console.log(state)
 		monthState = state.monthState;
 		weeklyState = state.weeklyState;
 		dailyState = state.dailyState;
 		addTodoState = state.addTodoState;
+		checkTodoState = state.checkTodoState;
 	})
 	
 	
@@ -33,11 +36,12 @@
 	<Clock/>
 	<Select/>
 </div>
-
+{#if checkTodoState == true}
 <CheckTodo/>
-
+{/if}
+{#if addTodoState == true}
 <AddTodo/>
-
+{/if}
 {#if monthState == true}
 <Month/>
 {/if}
