@@ -9,12 +9,12 @@
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
 
-  let startDate = year + '.' + month + '.' + date
+  let setDate = year + '.' + month + '.' + date
 
   $: setTodoList = {
 	  setTodo: todo,
 	  setDetails: details,
-    startDay: startDate
+    setDate: setDate
   }
 
   const time = [
@@ -25,7 +25,7 @@
   const setItem = async() =>{
     try {
       await localforage.setDriver(localforage.INDEXEDDB)
-      const value = await localforage.setItem(startDate, (setTodoList));
+      const value = await localforage.setItem('Todo', (setTodoList));
       console.log(value)
     } catch (err) {
       console.log(err);
@@ -48,7 +48,7 @@
 
 <div>
   <label for="start" >예정일:</label>
-  <input type="text" name="start" bind:value={startDate} class="border border-gray-500 w-24">
+  <input type="text" name="start" bind:value={setDate} class="border border-gray-500 w-24">
   <select name="time">
     {#each time as {num}, i}
     <option value="" >{num}시 </option>
