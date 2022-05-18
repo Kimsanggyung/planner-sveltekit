@@ -17,19 +17,33 @@
     setDate: setDate
   }
 
+  const dbReq = indexedDB.open('todoDatas',2)
+  let db;
+  dbReq.addEventListener('success',function(event){
+    console.log('success')
+    db = event.target.result;
+  })
+  dbReq.addEventListener('error',function(event){
+    const error = event.target.error;
+    console.log('erroe',error.name)
+  })
+  dbReq.addEventListener('upgradeneeded',function(event){
+    console.log('upgradeneeded')
+    db = event.target.result;
+    db.createObjectStore('datas',{keyPath:'id',autoIncrement:true})
+  })
+
   const time = [
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
     {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
   ]
 
-  const setItem = async() =>{
-    try {
-      await localforage.setDriver(localforage.INDEXEDDB)
-      const value = await localforage.setItem('Todo', (setTodoList));
-      console.log(value)
-    } catch (err) {
-      console.log(err);
-    }
+  const setItem =() =>{
+    let store = db.transaction('datas', 'readwrite').objectStore('datas')
+    let addReq = store.add({setTodoList})
+    addReq.addEventListener('success',function(event){
+      console.log(event.target.result)
+    })
   }
 
 </script>
@@ -49,7 +63,7 @@
 <div>
   <label for="start" >예정일:</label>
   <input type="text" name="start" bind:value={setDate} class="border border-gray-500 w-24">
-  <select name="time">
+  <select id="time">
     {#each time as {num}, i}
     <option value="" >{num}시 </option>
     {/each}
