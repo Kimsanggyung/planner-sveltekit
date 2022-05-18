@@ -11,10 +11,10 @@
 
   let startDate = year + '.' + month + '.' + date
 
-  let setTodoList = {
-    startDay: startDate,
+  $: setTodoList = {
 	  setTodo: todo,
-	  setDetails: details
+	  setDetails: details,
+    startDay: startDate
   }
 
   const time = [
@@ -32,16 +32,10 @@
     }
   }
 
-  const test = () => {
-    console.log(startDate)
-    console.log(todo)
-    console.log(details)
-
-  }
 </script>
 
 <button on:click={setItem}>등록</button>
-<button on:click={test}>test</button>
+
 <div>
   <span>제목: </span>
   <input type="text" bind:value={todo} class="border border-gray-500">
@@ -53,7 +47,6 @@
 </div>
 
 <div>
-  <span>일시: </span>
   <label for="start" >예정일:</label>
   <input type="text" name="start" bind:value={startDate} class="border border-gray-500 w-24">
   <select name="time">
