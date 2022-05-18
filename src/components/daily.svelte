@@ -1,10 +1,11 @@
 <script>
 // @ts-nocheck
+  import moment from "moment";
   const date = new Date();
 	let	month = date.getMonth();
 	let year = date.getFullYear();
   let day = date.getDate();
-  
+  const timeNum =[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
   const nextDay = () => {
     const checkMonth = [1,3,5,7,8,9,12]
     const result = checkMonth.find(value => value == month+1)

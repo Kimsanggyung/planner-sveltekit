@@ -1,5 +1,7 @@
 <script>
-// @ts-nocheck
+  // @ts-nocheck
+  import { mount_component } from "svelte/internal";
+  import moment from "moment";
 
   const getDate = new Date()
   let year = getDate.getFullYear();
