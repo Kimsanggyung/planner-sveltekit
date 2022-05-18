@@ -30,83 +30,124 @@
 
   const viweMonth = () => {
       stateData.update(value => {
-      value.monthState = true
-      return value
+      value.monthState = true;
+      return value;
     })
     if(weeklyState == true){
         stateData.update(value => {
-        value.weeklyState = !value.weeklyState
-        return value
-      })
-    }
-    if(dailyState == true){
-      stateData.update(value => {
-      value.dailyState = !value.dailyState
-      return value
-      })
-    }
-  }
-
-  const viweWeekly = () => {
-      stateData.update(value => {
-      value.weeklyState = true
-      return value
-    })
-    if(monthState == true){
-      stateData.update(value => {
-        value.monthState = !value.monthState
-        return value
-      })
-    }
-    if(dailyState == true){
-      stateData.update(value => {
-      value.dailyState = !value.dailyState
-      return value
-      })
-    }
-  }
-
-  const viweDaily = () => {
-    stateData.update(value => {
-      value.dailyState = true
-      return value
-    })
-    if(monthState == true){
-      stateData.update(value => {
-        value.monthState = !value.monthState
-        return value
-      })
-    }
-    if(weeklyState == true){
-      stateData.update(value => {
-      value.weeklyState = !value.weeklyState
-      return value
-      })
-    }
-  }
-
-  const viweAddTodo = () => {
-
-    stateData.update(value => {
-      value.addTodoState = true;
-      return value
-    })
-    if(monthState == true){
-      stateData.update(value => {
-        value.monthState = !value.monthState
-        return value
-      })
-    }
-    if(weeklyState == true){
-      stateData.update(value => {
-      value.weeklyState = !value.weeklyState
-      return value
+        value.weeklyState = !value.weeklyState;
+        return value;
       })
     }
     if(dailyState == true){
       stateData.update(value => {
       value.dailyState = !value.dailyState;
       return value;
+      })
+    }
+    if(addTodoState == true){
+      stateData.update(value => {
+        value.addTodoState =!value.addTodoState;
+        return value;
+      })
+    }
+    if(checkTodoState == true){
+      stateData.update(value => {
+        value.checkTodoState = !value.checkTodoState;
+        return value;
+      })
+    }
+  }
+
+  const viweWeekly = () => {
+      stateData.update(value => {
+      value.weeklyState = true;
+      return value;
+    })
+    if(monthState == true){
+      stateData.update(value => {
+        value.monthState = !value.monthState;
+        return value;
+      })
+    }
+    if(dailyState == true){
+      stateData.update(value => {
+      value.dailyState = !value.dailyState;
+      return value;
+      })
+    }
+    if(addTodoState == true){
+      stateData.update(value => {
+        value.addTodoState =!value.addTodoState;
+        return value;
+      })
+    }
+    if(checkTodoState == true){
+      stateData.update(value => {
+        value.checkTodoState = !value.checkTodoState;
+        return value;
+      })
+    }
+  }
+
+  const viweDaily = () => {
+    stateData.update(value => {
+      value.dailyState = true;
+      return value;
+    })
+    if(monthState == true){
+      stateData.update(value => {
+        value.monthState = !value.monthState;
+        return value;
+      })
+    }
+    if(weeklyState == true){
+      stateData.update(value => {
+      value.weeklyState = !value.weeklyState;
+      return value;
+      })
+    }
+    if(addTodoState == true){
+      stateData.update(value => {
+        value.addTodoState =!value.addTodoState;
+        return value;
+      })
+    }
+    if(checkTodoState == true){
+      stateData.update(value => {
+        value.checkTodoState = !value.checkTodoState;
+        return value;
+      })
+    }
+  }
+
+  const viweAddTodo = () => {
+    stateData.update(value => {
+      value.addTodoState = true;
+      return value;
+    })
+    if(monthState == true){
+      stateData.update(value => {
+        value.monthState = !value.monthState;
+        return value;
+      })
+    }
+    if(weeklyState == true){
+      stateData.update(value => {
+      value.weeklyState = !value.weeklyState;
+      return value;
+      })
+    }
+    if(dailyState == true){
+      stateData.update(value => {
+      value.dailyState = !value.dailyState;
+      return value;
+      })
+    }
+    if(checkTodoState == true){
+      stateData.update(value => {
+        value.checkTodoState = !value.checkTodoState
+        return value;
       })
     }
   }
@@ -118,26 +159,26 @@
     })
     if(monthState == true){
       stateData.update(value => {
-        value.monthState = !value.monthState
-        return value
+        value.monthState = !value.monthState;
+        return value;
       })
     }
     if(weeklyState == true){
       stateData.update(value => {
-      value.weeklyState = !value.weeklyState
-      return value
+      value.weeklyState = !value.weeklyState;
+      return value;
       })
     }
     if(dailyState == true){
       stateData.update(value => {
-      value.dailyState = !value.dailyState
-      return value
+      value.dailyState = !value.dailyState;
+      return value;
       })
     }
     if(addTodoState == true){
       stateData.update(value => {
-        value.addTodoState = !value.addTodoState
-        return value
+        value.addTodoState = !value.addTodoState;
+        return value;
       })
     }
   }
