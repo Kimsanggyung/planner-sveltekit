@@ -10,6 +10,7 @@
 	import Weekly from '../components/weekly.svelte';
 	import Daily from '../components/daily.svelte';
 	import Select from '../components/select.svelte';
+	import CheckTodo from '../components/checkTodo.svelte'
 	
 	let monthState;
 	let weeklyState;
@@ -32,6 +33,8 @@
 	<Clock/>
 	<Select/>
 </div>
+
+<CheckTodo/>
 
 <AddTodo/>
 
