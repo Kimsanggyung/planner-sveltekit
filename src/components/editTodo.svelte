@@ -5,11 +5,20 @@
   import { db } from '../store/indexed'
   
   let dataId;
+  let getDate = new Date();
+  let year = getDate.getFullYear();
+  let month = getDate.getMonth()+1;
+  let date = getDate.getDate();
+
   let edidtDatas ={
-    setDate:'',
+    setDate: year + '.' + month + '.' + date,
     setTodo: '',
     setDetails: ''
   }
+
+  
+
+  year + '.' + month + '.' + date
 
   datasId.subscribe(value => {
     dataId = value
