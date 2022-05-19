@@ -52,12 +52,17 @@
       console.log(event)
     })
   }
-
+  console.log(value)
 </script>
 
+{#if dateValue == undefined }
+  <div>일정이 없습니다.</div>
+{/if}
+{#if dateValue !== undefined }
 <div>
   <button on:click={editMode}>
     {num}. 일자:{dateValue} 제목:{todoValue} 내용:{detailsValue}
     </button>
     <button on:click={deleteTodo}>X</button>
 </div>
+{/if}
