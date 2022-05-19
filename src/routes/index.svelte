@@ -28,7 +28,7 @@
 		checkTodoState = state.checkTodoState;
 		editTodoState = state.edidtTodoState;
 	})
-	console.log(editTodoState)
+
 </script>
 
 <div>

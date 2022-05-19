@@ -24,3 +24,5 @@ export const todoData = writable({
 	setTodo: '',
 	setDetails: ''
 })
+
+export let datasId = writable(0);
