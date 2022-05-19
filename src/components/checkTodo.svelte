@@ -45,8 +45,19 @@
     datasId.update(id => id = num)
   }
 
+  const deleteTodo = () => {
+    let store = db.transaction('datas','readwrite').objectStore('datas');
+    let deleteReq = store.delete(1)
+    deleteReq.addEventListener('success', function(event){
+      console.log(event)
+    })
+  }
+
 </script>
 
 <div>
-  <button on:click={editMode}>{num}. 일자:{dateValue} 제목:{todoValue} 내용:{detailsValue}</button>
+  <button on:click={editMode}>
+    {num}. 일자:{dateValue} 제목:{todoValue} 내용:{detailsValue}
+    </button>
+    <button on:click={deleteTodo}>X</button>
 </div>
