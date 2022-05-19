@@ -13,6 +13,7 @@ export const stateData = writable({
 	weeklyState: false,
 	addTodoState: false,
 	checkTodoState: false,
+	edidtTodoState: false
 })
 
 export const todoData = writable({

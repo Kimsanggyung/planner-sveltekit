@@ -2,6 +2,7 @@
 // @ts-nocheck
   import localforage from 'localforage'
   import { db } from '../store/indexed'
+  import { stateData } from '../store/store'
   let value;
   let dateValue;
   let todoValue;
@@ -26,11 +27,25 @@
       detailsValue = value.setTodoList.setDetails
       console.log(dateValue)
     })
-  }
-    
+  }  
   getItem()
 
+  const editMode = () =>{
+    stateData.update(state => {
+      state.edidtTodoState = true;
+      console.log(state)
+      console.log(state.edidtTodoState)
+      return state;
+    })
+    stateData.update(state =>{
+      state.checkTodoState = false;
+      return state
+    })
+  }
 
 </script>
 
-<div>일자:{dateValue} 제목:{todoValue} 내용:{detailsValue}</div>
+<div>
+  <button on:click={editMode}>test</button>
+  일자:{dateValue} 제목:{todoValue} 내용:{detailsValue}
+</div>
