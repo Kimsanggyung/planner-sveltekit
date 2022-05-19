@@ -10,10 +10,7 @@
   let num;
 
   const getItem = () =>{
-    let store = db.transaction('datas', 'readwrite').objectStore('datas');
-    let getAllReq = store.getAll();
-    getAllReq.addEventListener('success',function(event){
-    });
+    let store = db.transaction('datas', 'readonly').objectStore('datas')
     let getIdReq = store.get(1);
     getIdReq.addEventListener('success',function(event){
       value = event.target.result
@@ -21,10 +18,20 @@
       todoValue = value.setTodoList.setTodo
       detailsValue = value.setTodoList.setDetails
       num = value.id
-      console.log(event)
     })
   }
   getItem();
+
+  const getList = () =>{
+    let store = db.transaction('datas', 'readonly').objectStore('datas');
+    let getAllReq = store.getAll();
+    getAllReq.addEventListener('success', function(event){
+      value = event.target.result
+      console.log(event)
+      console.log(value)
+    })
+  }
+  getList();
 
   const editMode = () =>{
     stateData.update(state => {
