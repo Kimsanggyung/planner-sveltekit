@@ -13,4 +13,8 @@ dbReq.addEventListener('upgradeneeded',function(event){
   console.log('upgradeneeded')
   db = event.target.result;
   db.createObjectStore('datas',{keyPath:'id',autoIncrement:true})
+  let oldVersion = event.oldVersion;
+  if(oldVersion < 1 ){
+    db.createObjectStore('datas',{keyPath:'id',autoIncrement:true})
+  }
 })
