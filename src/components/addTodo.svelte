@@ -30,6 +30,11 @@
     })
   }
 
+  const timeValue = (target) => {
+    console.log(target.value);
+    console.log(target.options[target.selectedIndex].text);
+  }
+
 </script>
 
 <button on:click={setItem}>등록</button>
@@ -47,7 +52,7 @@
 <div>
   <label for="start" >예정일:</label>
   <input type="text" name="start" bind:value={setDate} class="border border-gray-500 w-24">
-  <select id="time">
+  <select id="time" onchange="timeValue(this)">
     {#each time as {num}, i}
     <option value="" >{num}시 </option>
     {/each}
