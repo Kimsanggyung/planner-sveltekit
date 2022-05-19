@@ -18,6 +18,7 @@
   let dailyState;
   let addTodoState;
   let checkTodoState;
+  let edidtTodoState;
 
   stateData.subscribe(state => {
     monthState = state.monthState;
@@ -25,6 +26,7 @@
     dailyState = state.dailyState;
     addTodoState = state.addTodoState;
     checkTodoState = state.checkTodoState;
+    edidtTodoState = state.edidtTodoState;
   })
 
 
@@ -54,6 +56,12 @@
     if(checkTodoState == true){
       stateData.update(value => {
         value.checkTodoState = !value.checkTodoState;
+        return value;
+      })
+    }
+    if(edidtTodoState == true){
+      stateData.update(value => {
+        value.edidtTodoState = false;
         return value;
       })
     }
@@ -88,6 +96,12 @@
         return value;
       })
     }
+    if(edidtTodoState == true){
+      stateData.update(value => {
+        value.edidtTodoState = false;
+        return value;
+      })
+    }
   }
 
   const viweDaily = () => {
@@ -116,6 +130,12 @@
     if(checkTodoState == true){
       stateData.update(value => {
         value.checkTodoState = !value.checkTodoState;
+        return value;
+      })
+    }
+    if(edidtTodoState == true){
+      stateData.update(value => {
+        value.edidtTodoState = false;
         return value;
       })
     }
@@ -150,6 +170,12 @@
         return value;
       })
     }
+    if(edidtTodoState == true){
+      stateData.update(value => {
+        value.edidtTodoState = false;
+        return value;
+      })
+    }
   }
 
   const viweCheckTodo = () => {
@@ -178,6 +204,12 @@
     if(addTodoState == true){
       stateData.update(value => {
         value.addTodoState = !value.addTodoState;
+        return value;
+      })
+    }
+    if(edidtTodoState == true){
+      stateData.update(value => {
+        value.edidtTodoState = false;
         return value;
       })
     }
