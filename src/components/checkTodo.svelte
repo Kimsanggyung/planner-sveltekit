@@ -11,7 +11,7 @@
 
   const getItem = () =>{
     let store = db.transaction('datas', 'readonly').objectStore('datas')
-    let getIdReq = store.get(1);
+    let getIdReq = store.get(2);
     getIdReq.addEventListener('success',function(event){
       value = event.target.result
       dateValue = value.setTodoList.setDate
@@ -33,6 +33,16 @@
   }
   getList();
 
+  const getTodoList = () => {
+    let store = db.transaction('datas', 'readonly').objectStore('datas');
+    let getListReq = store.getAll()
+    getListReq.addEventListener('success', function(event){
+      console.log(event)
+    }) 
+  }
+  getTodoList();
+  
+
   const editMode = () =>{
     stateData.update(state => {
       state.edidtTodoState = true;
@@ -52,7 +62,7 @@
       console.log(event)
     })
   }
-  console.log(value)
+
 </script>
 
 {#if dateValue == undefined }
