@@ -1,5 +1,5 @@
 // @ts-nocheck
-const dbReq = indexedDB.open('todoDatas',2)
+const dbReq = indexedDB.open('todoDatas',3)
 export let db;
 dbReq.addEventListener('success',function(event){
   console.log('success')
@@ -12,9 +12,11 @@ dbReq.addEventListener('error',function(event){
 dbReq.addEventListener('upgradeneeded',function(event){
   console.log('upgradeneeded')
   db = event.target.result;
-  db.createObjectStore('datas',{keyPath:'id',autoIncrement:true})
   let oldVersion = event.oldVersion;
-  if(oldVersion < 1 ){
+  if(oldVersion < 1){
     db.createObjectStore('datas',{keyPath:'id',autoIncrement:true})
+  }
+  if(oldVersion < 2){
+    db.createObjectStore('datas2',{keyPath:'id',autoIncrement:true})
   }
 })
