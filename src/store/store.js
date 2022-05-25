@@ -1,11 +1,9 @@
 import { writable } from "svelte/store";
 
-const date = new Date();
-export const getDates = writable({
-	year: date.getFullYear(),
-	month: date.getMonth()+1,
-	day: date.getDate()
-});
+const getDate = new Date();
+let year = getDate.getFullYear();
+let month = getDate.getMonth()+1;
+let day = getDate.getDate();
 
 export const stateData = writable({
 	monthState: true,
@@ -14,15 +12,13 @@ export const stateData = writable({
 	addTodoState: false,
 	checkTodoState: false,
 	edidtTodoState: false
-})
+});
 
-export const todoData = writable({
-	startDay: '',
-	startTime:'',
-	endDay: '',
-	endTime:'',
+export const todoDatas = writable({
+	setDate: '',
+	setTime: 0,
 	setTodo: '',
 	setDetails: ''
-})
+});
 
-export let datasId = writable(0);
+export const todoDate = writable(year+"."+month+'.'+ day);
