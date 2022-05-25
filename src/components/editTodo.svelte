@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
 
-  import { stateData, datasId } from '../store/store'
+  import { stateData } from '../store/store'
   import { db } from '../store/indexed'
   
   let dataId;

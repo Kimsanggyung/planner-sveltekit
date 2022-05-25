@@ -1,48 +1,16 @@
 <script>
 // @ts-nocheck
   import localforage from 'localforage'
-  import { db } from '../store/indexed'
-  import { stateData, datasId} from '../store/store'
-  let value;
-  let dateValue;
-  let todoValue;
-  let detailsValue;
+  import { getItem, deleteTodo } from '../store/indexed'
+  import { stateData } from '../store/store'
+
   let num;
+  let getData;
 
-  const getItem = () =>{
-    let store = db.transaction('datas', 'readonly').objectStore('datas')
-    let getIdReq = store.get(2);
-    getIdReq.addEventListener('success',function(event){
-      value = event.target.result
-      dateValue = value.setTodoList.setDate
-      todoValue = value.setTodoList.setTodo
-      detailsValue = value.setTodoList.setDetails
-      num = value.id
-    })
-  }
-  getItem();
-
-  const getList = () =>{
-    let store = db.transaction('datas', 'readonly').objectStore('datas');
-    let getAllReq = store.getAll();
-    getAllReq.addEventListener('success', function(event){
-      value = event.target.result
-      console.log(event)
-      console.log(value)
-    })
-  }
-  getList();
-
-  const getTodoList = () => {
-    let store = db.transaction('datas', 'readonly').objectStore('datas');
-    let getListReq = store.getAll()
-    getListReq.addEventListener('success', function(event){
-      console.log(event)
-    }) 
-  }
-  getTodoList();
+  getItem().then(data => {
+    getData = data;
+  })
   
-
   const editMode = () =>{
     stateData.update(state => {
       state.edidtTodoState = true;
@@ -55,24 +23,17 @@
     datasId.update(id => id = num)
   }
 
-  const deleteTodo = () => {
-    let store = db.transaction('datas','readwrite').objectStore('datas');
-    let deleteReq = store.delete(1)
-    deleteReq.addEventListener('success', function(event){
-      console.log(event)
-    })
-  }
-
 </script>
 
-{#if dateValue == undefined }
-  <div>일정이 없습니다.</div>
-{/if}
-{#if dateValue !== undefined }
 <div>
-  <button on:click={editMode}>
-    {num}. 일자:{dateValue} 제목:{todoValue} 내용:{detailsValue}
-    </button>
-    <button on:click={deleteTodo}>X</button>
+  {#if getData !== undefined}
+    {#each getData as { setTodoList, id }, idx }
+      <button on:click={editMode}>
+        {idx + 1}. 일자:{setTodoList.setDate} 제목:{setTodoList.setTodo} 내용:{setTodoList.setDetails}
+      </button>
+      <button on:click={()=> { deleteTodo(id)}}>X</button>
+      <br/>
+    {/each}
+  {/if}
 </div>
-{/if}
+

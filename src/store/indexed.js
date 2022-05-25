@@ -20,3 +20,34 @@ dbReq.addEventListener('upgradeneeded',function(event){
     db.createObjectStore('datas2',{keyPath:'id',autoIncrement:true})
   }
 })
+
+// export const getItem = (id) => {
+//   return new Promise((resolve, reject) => {
+//   }
+// }
+
+export const getItem = (id) => {
+  return new Promise((resolve, reject) => {
+    let store = db.transaction('datas', 'readonly').objectStore('datas')
+    let getIdReq = id? store.get(id) : store.getAll();
+    getIdReq.addEventListener('success',function(event){
+      resolve(event.target.result)
+    })
+    getIdReq.addEventListener('error',function(event){
+      reject(event)
+    })
+  })
+}
+
+export const deleteTodo = (id) => {
+  return new Promise((resolve, reject) => {
+    let store = db.transaction('datas','readwrite').objectStore('datas');
+    let deleteReq = store.delete(id)
+    deleteReq.addEventListener('success', function(event){
+      resolve(event)
+    })
+    deleteReq.addEventListener('error',function(event){
+      reject(event)
+    })
+  })
+}
