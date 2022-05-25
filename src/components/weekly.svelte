@@ -2,12 +2,24 @@
   // @ts-nocheck
   import { mount_component } from "svelte/internal";
   import moment from "moment";
+  import { getItem } from "../store/indexed";
+  import { stateData } from "../store/store";
+  import WeeklyItem from "./parts/weeklyItem.svelte";
 
   const getDate = new Date()
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
   let week = getDate.getDay();
+
+  const getItemPromise = getItem().then(data => {
+    return data;
+  });
+
+  const time = [
+    {num:0},{num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
+    {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
+  ]
 
   let weekStartDate = new Date(year, month, date - week);
   let weekEndDate = new Date(year, month, date + (6 - week));
@@ -74,7 +86,22 @@
     return (getWeekStart -= 7, getWeekEnd -= 7)
   }
 
-  
+  const findData = (time, data) => {
+    const result = data.find(({setTodoList})=>{
+      const {setTime, setDate} = setTodoList;
+      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+4))
+    })
+    return result;
+  }
+
+  const viweAddTodo = () =>{
+    stateData.update(value => {
+      value.weeklyState = false;
+      value.addTodoState =true;
+      return value;
+    })
+  }
+
 </script>
 
   <div>
@@ -85,7 +112,7 @@
   </div>
 
   <table class="text-3xl m-4">
-    <tr class="w-40" >
+    <tr class="w-40" on:click={viweAddTodo}>
       <th>{getWeekStart} 일</th>
       <th>{getWeekStart+1} 월</th>
       <th>{getWeekStart+2} 화</th>
@@ -94,4 +121,17 @@
       <th>{getWeekStart+5} 금</th>
       <th>{getWeekEnd}토  </th>
     </tr>
+    {#await getItemPromise}
+      <span>데이터 가지고 오는 중....</span>
+    {:then data} 
+      <div>
+        {#each time as {num}}
+          <div> 
+            {num}시:  
+            <WeeklyItem data={findData(num, data, date)} />
+          </div>
+        {/each}
+      </div>
+    {/await}
+
   </table>

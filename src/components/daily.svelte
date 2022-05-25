@@ -1,11 +1,25 @@
 <script>
 // @ts-nocheck
   import moment from "moment";
+  import { getItem } from '../store/indexed'
+  import { todoDate, stateData } from "../store/store";
+  import DaillyItem from './parts/dailyItem.svelte';
+
   const date = new Date();
 	let	month = date.getMonth();
 	let year = date.getFullYear();
   let day = date.getDate();
-  const timeNum =[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+
+  const getItemPromise = getItem().then(data => {
+    return data;
+  });
+
+
+  const time = [
+    {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
+    {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
+  ];
+
   const nextDay = () => {
     const checkMonth = [1,3,5,7,8,9,12]
     const result = checkMonth.find(value => value == month+1)
@@ -21,7 +35,8 @@
       year += 1;
       return month = 0;
     }
-		return day += 1;
+    todoDate.update(date => date = year+"."+(month+1)+'.'+ (day+1))
+    return day += 1;
 	}
 	
 	const prevDay = () => {
@@ -40,8 +55,25 @@
       year -= 1;
       return month = 12;
     }
+    todoDate.update(date => date = year+"."+(month+1)+'.'+ (day+1))
 		return day -= 1;
 	}
+
+  const findData = (time, data) => {
+    const result = data.find(({setTodoList})=>{
+      const {setTime, setDate} = setTodoList;
+      return (parseInt(setTime) === time && setDate === year+"."+(month+1)+'.'+ day )
+    })
+    return result;
+  }
+  
+  const viweAddTodo = () => {
+    stateData.update(value => {
+      value.dailyState = false;
+      value.addTodoState = true;
+      return value;
+    })
+  }
 
 </script>
 <main>
@@ -50,30 +82,17 @@
     <sanp>{year}년 {month+1}월 {day}일</sanp>
     <button on:click={nextDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">Next</button>
   </div>
-  <div>
-    <li>00시</li>
-    <li>01시</li>
-    <li>02시</li>
-    <li>03시</li>
-    <li>04시</li>
-    <li>05시</li>
-    <li>06시</li>
-    <li>08시</li>
-    <li>09시</li>
-    <li>10시</li>
-    <li>11시</li>
-    <li>12시</li>
-    <li>13시</li>
-    <li>14시</li>
-    <li>15시</li>
-    <li>16시</li>
-    <li>17시</li>
-    <li>18시</li>
-    <li>19시</li>
-    <li>20시</li>
-    <li>21시</li>
-    <li>22시</li>
-    <li>23시</li>
-    <li>24시</li>
-  </div>
+  {#await getItemPromise}
+    <span>데이터 가지고 오는 중....</span>
+  {:then data} 
+    <div>
+      {#each time as {num}}
+        <div on:click={viweAddTodo}> 
+          {num}시:  
+          <DaillyItem data={findData(num, data, day)} />
+        </div>
+      {/each}
+    </div>
+  {/await}
+  
 </main>
