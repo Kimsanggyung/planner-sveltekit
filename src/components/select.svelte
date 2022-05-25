@@ -2,16 +2,7 @@
 // @ts-nocheck
 
 
-  import { getDates, stateData } from '../store/store'
-
-  let getYear;
-  let getMonth;
-  let getDay;
-  getDates.subscribe(value => {
-   getYear = value.year
-   getMonth = value.month
-   getDay = value.day
-  })
+  import { stateData, todoDate } from '../store/store'
 
   let monthState;
   let weeklyState;
@@ -19,6 +10,11 @@
   let addTodoState;
   let checkTodoState;
   let edidtTodoState;
+
+  let getDate = new Date();
+  let year = getDate.getFullYear();
+  let month = getDate.getMonth()+1;
+  let day = getDate.getDate();
 
   stateData.subscribe(state => {
     monthState = state.monthState;
@@ -144,6 +140,10 @@
   const viweAddTodo = () => {
     stateData.update(value => {
       value.addTodoState = true;
+      return value;
+    })
+    todoDate.update(value => {
+      value = year+"."+(month)+'.'+ day;
       return value;
     })
     if(monthState == true){
