@@ -12,6 +12,9 @@
   let date = getDate.getDate();
   let week = getDate.getDay();
 
+  let weekStsrt = moment().day(0).format("DD");
+  console.log(weekStsrt)
+
   const getItemPromise = getItem().then(data => {
     return data;
   });
@@ -113,7 +116,7 @@
 
   <table class="text-3xl m-4">
     <tr class="w-40" on:click={viweAddTodo}>
-      <th>{getWeekStart} 일</th>
+      <th>{weekStsrt} 일</th>
       <th>{getWeekStart+1} 월</th>
       <th>{getWeekStart+2} 화</th>
       <th>{getWeekStart+3} 수</th>

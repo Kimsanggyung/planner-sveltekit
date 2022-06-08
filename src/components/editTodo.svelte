@@ -1,19 +1,34 @@
 <script>
 // @ts-nocheck
 
-  import { stateData } from '../store/store'
-  import { db } from '../store/indexed'
+  import { stateData, dbInstance, todoDatas } from '../store/store';
+  import { getItem } from '../store/indexed';
   
-  let dataId;
+  let idb;
+  let day;
+  let todo;
+  let value;
+  let details;
+  let targetID;
   let getDate = new Date();
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
 
-  let edidtDatas ={
-    setDate: '',
-    setTodo: '',
-    setDetails: ''
+  dbInstance.subscribe(idxdb => idb = idxdb)
+  todoDatas.subscribe(value => targetID = value.editTargetID)
+
+  getItem(targetID).then(value => {
+    day = value.setTodoList.setDate;
+    todo = value.setTodoList.setTodo;
+    details = value.setTodoList.setDetails;
+  });
+
+  $: edidtDatas ={
+    setDate: day,
+    setTodo: todo,
+    setDetails: details,
+    setTime: value
   }
 
   const time = [
@@ -23,34 +38,16 @@
 
   year + '.' + month + '.' + date
 
-  datasId.subscribe(value => {
-    dataId = value
-  })
-  console.log(dataId)
-
   const editTodoDatas = () => {
-    let store = db.transaction('datas', 'readwrite').objectStore('datas');
+    let store = idb.transaction('datas', 'readwrite').objectStore('datas');
     let putReq = store.put({
-      id:dataId,
+      id:(targetID),
       setTodoList: edidtDatas 
     })
     putReq.addEventListener('succcess', function(event){
       console.log(event)
     })
   }
-
-  const getDataValue = ()=> {
-    let store = db.transaction('datas', 'readonly').objectStore('datas')
-    let getReq = store.get(1);
-    getReq.addEventListener('success', function(event){
-      let value = event.target.result
-      console.log(value)
-      edidtDatas.setDate = value.setTodoList.setDate;
-      edidtDatas.setTodo = value.setTodoList.setTodo;
-      edidtDatas.setDetails = value.setTodoList.setDetails
-    })
-  }
-  getDataValue();
 
   const cancel = () =>{
     stateData.update(state => {
@@ -62,13 +59,21 @@
       return state;
     })
   } 
+
+  const timeValue = () => {
+    let target = document.getElementById("time")
+    value = target.options[target.selectedIndex].value;
+    console.log(value)
+  }
+
 </script>
-<input bind:value={edidtDatas.setDate}>
-<input bind:value={edidtDatas.setTodo}>
-<input bind:value={edidtDatas.setDetails}>
-<select id="time" >
+<input bind:value={day}>
+<input bind:value={todo}>
+<input bind:value={details}>
+<select id="time" on:change={timeValue}>
+    <option value="not">시간선택</option>
     {#each time as {num}, i}
-    <option value={num}> {num}시 </option>
+      <option value={num}> {num}시 </option>
     {/each}
 </select>
 

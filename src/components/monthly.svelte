@@ -1,12 +1,26 @@
 <script>
-	const date = new Date();
+	// @ts-nocheck
+	import { getItem } from "../store/indexed";
+	import MonthlyItem from "./parts/monthlyItem.svelte";
+	import { stateData, dbInstance } from "../store/store";
+
+	// let getItem = null;
+	let getItemPromise;
+	dbInstance.subscribe(db => {
+		if(db){			
+			getItemPromise = getItem().then(data => {
+				return data;
+			});
+		}
+	});	
 	
+	const date = new Date();
 	const today = {
 		dayNumber: date.getDate(),
 		month: date.getMonth(),
 		year: date.getFullYear(),
 	}
-	
+
 	const monthNames = [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
 	let monthIndex = date.getMonth();
 	$: month = monthNames[monthIndex];
@@ -34,8 +48,25 @@
 		}
 		return monthIndex -= 1;
 	}
+
+	// const findData = (data) => {
+  //   const result = data.find(({setTodoList})=>{
+  //     const {setDate} = setTodoList;
+  //     return (setDate === (year)+"."+(monthIndex)+'.'+(9))
+  //   })
+  //   return result;
+  // }
+
+	const viweAddTodo = () =>{
+    stateData.update(value => {
+      value.monthState = false;
+      value.addTodoState =true;
+      return value;
+    })
+  }
 	
 	$: console.log(`${month}, ${today.dayNumber}, ${year}, FIRST DAY index is ${firstDayIndex}, MONTH index is ${monthIndex}, No. of days: ${numberOfDays}`)
+
 </script>
 
 
@@ -58,20 +89,25 @@
 		<li>금</li>
 		<li>토</li>
 	</ul>
+	{#await getItemPromise}
+      <span>데이터 가지고 오는 중....</span>
+    {:then data} 
+		<ul class="days">
+			{#each Array(calendarCellsQty) as _, i}
+				{#if i < firstDayIndex || i >= numberOfDays+firstDayIndex  }
+					<li>&nbsp;</li>
+				{:else}
+					<li on:click={viweAddTodo} class:active={i === today.dayNumber+(firstDayIndex-1) &&
+														monthIndex === today.month &&
+														year === today.year}>
 
-	<ul class="days">
-		{#each Array(calendarCellsQty) as _, i}
-			{#if i < firstDayIndex || i >= numberOfDays+firstDayIndex  }
-				<li>&nbsp;</li>
-			{:else}
-				<li class:active={i === today.dayNumber+(firstDayIndex-1) &&
-													monthIndex === today.month &&
-													year === today.year}>
-					{(i - firstDayIndex) + 1}
-				</li>
-			{/if}
-		{/each}
-	</ul>
+						{(i - firstDayIndex) + 1}
+						<!-- <MonthlyItem data={findData(data, date)} /> -->
+					</li>
+				{/if}
+			{/each}
+		</ul>
+	{/await}
 
 
 				

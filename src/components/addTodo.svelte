@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
   import { todoDate } from '../store/store'
-  import { db } from '../store/indexed'
+  import { setItem } from '../store/indexed'
 
   let text;
   let value;
@@ -24,13 +24,6 @@
     {num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
     {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
   ]
-  const setItem =() =>{
-    let store = db.transaction('datas', 'readwrite').objectStore('datas')
-    let addReq = store.add({setTodoList})
-    addReq.addEventListener('success',function(event){
-      console.log(event.target.result)
-    })
-  }
 
   const timeValue = () => {
     let target = document.getElementById("time")
@@ -57,11 +50,11 @@
   <input type="text" name="start" bind:value={$todoDate} class="border border-gray-500 w-24">
   <select id="time" on:change={timeValue}>
     <option value="not">시간선택</option>
-    {#each time as {num}, i}
+    {#each time as {num}}
     <option value={num}> {num}시 </option>
     {/each}
   </select>
 </div>
 
-<button on:click={setItem}>등록</button>
+<button on:click={()=> setItem({setTodoList})}>등록</button>
 
