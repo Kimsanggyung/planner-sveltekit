@@ -12,6 +12,7 @@
 	import Select from '../components/select.svelte';
 	import CheckTodo from '../components/checkTodo.svelte'
 	import EditTodo from '../components/editTodo.svelte'
+	import Login from '../components/login.svelte'
 	
 	let monthState;
 	let weeklyState;
@@ -19,6 +20,7 @@
 	let addTodoState;
 	let checkTodoState;
 	let editTodoState;
+	let loggedState;
 
 	stateData.subscribe(state => {
 		monthState = state.monthState;
@@ -27,15 +29,20 @@
 		addTodoState = state.addTodoState;
 		checkTodoState = state.checkTodoState;
 		editTodoState = state.edidtTodoState;
+		loggedState = state.loggedState;
 	})
 
 </script>
 
-<div>
 	<Today/>
 	<Clock/>
+	
+{#if loggedState == true}
 	<Select/>
-</div>
+{/if}
+{#if loggedState == false}
+	<Login/>
+{/if}
 {#if checkTodoState == true}
 	<CheckTodo/>
 {/if}
@@ -45,7 +52,7 @@
 {#if addTodoState == true}
 <AddTodo/>
 {/if}
-{#if monthState == true}
+{#if monthState == true && loggedState == true}
 <Month/>
 {/if}
 {#if weeklyState}

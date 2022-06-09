@@ -1,23 +1,29 @@
 <script>
 // @ts-nocheck
-  import { todoDate } from '../store/store'
+  import { todoDate, todoDatas } from '../store/store'
   import { setItem } from '../store/indexed'
 
   let text;
   let value;
   let todo = '';
   let details = '';
+  let loggedUser;
   let getDate = new Date();
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
   let setDate = year + '.' + month + '.' + date
 
+  todoDatas.subscribe(value => {
+    loggedUser = value.loggedID
+  })
+
   $: setTodoList = {
 	  setTodo: todo,
 	  setDetails: details,
     setDate: setDate,
-    setTime: value
+    setTime: value,
+    setUser: loggedUser
   }
 
   const time = [

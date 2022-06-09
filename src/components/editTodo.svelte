@@ -10,13 +10,17 @@
   let value;
   let details;
   let targetID;
+  let loggedID;
   let getDate = new Date();
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
 
   dbInstance.subscribe(idxdb => idb = idxdb)
-  todoDatas.subscribe(value => targetID = value.editTargetID)
+  todoDatas.subscribe(value => {
+    targetID = value.editTargetID
+    loggedID = value.loggedID
+  })
 
   getItem(targetID).then(value => {
     day = value.setTodoList.setDate;
@@ -28,7 +32,8 @@
     setDate: day,
     setTodo: todo,
     setDetails: details,
-    setTime: value
+    setTime: value,
+    setUser: loggedID
   }
 
   const time = [

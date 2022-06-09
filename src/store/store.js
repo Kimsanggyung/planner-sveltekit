@@ -12,6 +12,7 @@ export const stateData = writable({
 	addTodoState: false,
 	checkTodoState: false,
 	edidtTodoState: false,
+	loggedState: false
 });
 
 export const todoDatas = writable({
@@ -19,9 +20,14 @@ export const todoDatas = writable({
 	setTime: 0,
 	setTodo: '',
 	setDetails: '',
-	editTargetID: ''
+	editTargetID: '',
+	loggedID:''
 });
+
+export const storeUserData = writable([
+	{id: 'a',pwd: '123'}
+]);
 
 export const todoDate = writable(year+"."+month+'.'+ day);
 
-export const dbInstance = writable()
+export const dbInstance = writable();

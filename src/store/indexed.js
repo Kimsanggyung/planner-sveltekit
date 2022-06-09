@@ -43,7 +43,6 @@ export const setItem = (data) => {
 export const getItem = (id) => {
   return new Promise((resolve, reject) => {
     let store = idb.transaction('datas', 'readonly').objectStore('datas')
-    console.log(id)
     let getIdReq = id? store.get(id) : store.getAll();
     getIdReq.addEventListener('success',function(event){
       resolve(event.target.result)
