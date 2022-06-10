@@ -3,7 +3,7 @@
   import { mount_component } from "svelte/internal";
   import moment from "moment";
   import { getItem } from "../store/indexed";
-  import { stateData } from "../store/store";
+  import { stateData, todoDatas } from "../store/store";
   import WeeklyItem from "./parts/weeklyItem.svelte";
 
   const getDate = new Date()
@@ -13,11 +13,22 @@
   let week = getDate.getDay();
 
   let weekStsrt = moment().day(0).format("DD");
-  console.log(weekStsrt)
 
+  let checkUser;
+  let checkedID
   const getItemPromise = getItem().then(data => {
+    checkUser = data.find(value => value.setTodoList.setUser == loggedUser)
+    if(checkUser){
+      checkedID = checkUser.setTodoList.setUser;
+      console.log(checkedID);
+    }
     return data;
   });
+
+  let loggedUser;
+  todoDatas.subscribe(value => {
+    loggedUser = value.loggedID;
+  })
 
   const time = [
     {num:0},{num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
@@ -92,7 +103,7 @@
   const findData = (time, data) => {
     const result = data.find(({setTodoList})=>{
       const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+4))
+      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+5) && loggedUser == checkedID)
     })
     return result;
   }
@@ -136,5 +147,28 @@
         {/each}
       </div>
     {/await}
+  </table>
 
+  <table class="text-3xl m-4">
+    <tr class="w-40" on:click={viweAddTodo}>
+      <th>{weekStsrt} 일</th>
+      <th>{getWeekStart+1} 월</th>
+      <th>{getWeekStart+2} 화</th>
+      <th>{getWeekStart+3} 수</th>
+      <th>{getWeekStart+4} 목</th>
+      <th>{getWeekStart+5} 금</th>
+      <th>{getWeekEnd}토  </th>
+    </tr>
+    {#await getItemPromise}
+      <span>데이터 가지고 오는 중....</span>
+    {:then data} 
+      <div>
+        {#each time as {num}}
+          <div> 
+            {num}시:  
+            <WeeklyItem data={findData(num, data, date)} />
+          </div>
+        {/each}
+      </div>
+    {/await}
   </table>

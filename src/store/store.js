@@ -25,7 +25,8 @@ export const todoDatas = writable({
 });
 
 export const storeUserData = writable([
-	{id: 'a',pwd: '123'}
+	{id: 'a', pwd: '123'},
+	{id: 'b', pwd: '1234'}
 ]);
 
 export const todoDate = writable(year+"."+month+'.'+ day);

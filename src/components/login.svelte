@@ -3,11 +3,11 @@
 
   import { stateData, storeUserData, todoDatas } from '../store/store'
 
+  let userData;
+  let loggedUser;
   let inputId = '';
   let inputPwd  = '';
 
-  let userData;
-  let loggedUser;
   storeUserData.subscribe(value => {
     userData = value;
   });

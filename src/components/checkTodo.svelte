@@ -5,11 +5,25 @@
   import { stateData, todoDatas } from '../store/store'
 
   let getData;
+  let loggedUser;
+  let checkUser;
+  let checkedID;
+
+  todoDatas.subscribe(value => {
+    loggedUser = value.loggedID
+  })
 
   getItem().then(data => {
     getData = data;
+    checkUser = getData.find(value => value.setTodoList.setUser == loggedUser)
+    if(checkUser){
+      checkedID = checkUser.setTodoList.setUser;
+      console.log(checkedID);
+    }
   })
-  
+
+  console.log(checkedID)
+
   const editMode = (id) =>{
     stateData.update(state => {
       state.edidtTodoState = true;
@@ -25,12 +39,12 @@
     })
   }
 
-  console.log(getData)
+  
 
 </script>
 
 <div>
-  {#if getData && getData.length > 0}
+  {#if getData && getData.length > 0 && checkUser && checkedID && loggedUser === checkedID}
     {#each getData as { setTodoList, id }, idx }
       <span on:click={() => editMode(id)}>
         {idx + 1}. 일자:{setTodoList.setDate} 제목:{setTodoList.setTodo} 내용:{setTodoList.setDetails}

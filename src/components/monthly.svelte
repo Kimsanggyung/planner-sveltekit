@@ -2,7 +2,8 @@
 	// @ts-nocheck
 	import { getItem } from "../store/indexed";
 	import MonthlyItem from "./parts/monthlyItem.svelte";
-	import { stateData, dbInstance } from "../store/store";
+	import { stateData, dbInstance, todoDatas } from "../store/store";
+import { each } from "svelte/internal";
 
 	// let getItem = null;
 	let getItemPromise;
@@ -13,6 +14,12 @@
 			});
 		}
 	});	
+
+	let loggedUser;
+	todoDatas.subscribe(value => {
+    loggedUser = value.loggedID;
+  })
+
 	
 	const date = new Date();
 	const today = {
@@ -28,11 +35,15 @@
 	let year = date.getFullYear();
 	
 	$: firstDayIndex = new Date(year, monthIndex, 1).getDay();
-	// const currentDay = date.getDate();
+
 	$: numberOfDays = new Date(year, monthIndex+1, 0).getDate();
 	
 	$: calendarCellsQty = numberOfDays + firstDayIndex;
-	
+ 
+	for(i = 1; i < calendarCellsQty; i++){
+		console.log((i - firstDayIndex) + 1)
+	}
+
 	const goToNextMonth = () => {
 		if (monthIndex >= 11) {
 			year += 1;
@@ -49,13 +60,15 @@
 		return monthIndex -= 1;
 	}
 
-	// const findData = (data) => {
+	// const findData = (time, data) => {
   //   const result = data.find(({setTodoList})=>{
-  //     const {setDate} = setTodoList;
-  //     return (setDate === (year)+"."+(monthIndex)+'.'+(9))
+  //     const {setTime, setDate, setUser} = setTodoList;
+  //     return (parseInt(setTime) === time && setDate === year+"."+(month+1)+'.'+ day && setUser === loggedUser)
   //   })
   //   return result;
   // }
+
+	$: console.log(calendarCellsQty)
 
 	const viweAddTodo = () =>{
     stateData.update(value => {

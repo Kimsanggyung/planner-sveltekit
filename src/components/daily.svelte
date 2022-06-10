@@ -2,7 +2,7 @@
 // @ts-nocheck
   import moment from "moment";
   import { getItem } from '../store/indexed'
-  import { todoDate, stateData } from "../store/store";
+  import { todoDate, stateData, todoDatas } from "../store/store";
   import DaillyItem from './parts/dailyItem.svelte';
 
   const date = new Date();
@@ -13,6 +13,11 @@
   const getItemPromise = getItem().then(data => {
     return data;
   });
+
+  let loggedUser;
+  todoDatas.subscribe(value => {
+    loggedUser = value.loggedID
+  })
 
 
   const time = [
@@ -61,8 +66,8 @@
 
   const findData = (time, data) => {
     const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month+1)+'.'+ day )
+      const {setTime, setDate, setUser} = setTodoList;
+      return (parseInt(setTime) === time && setDate === year+"."+(month+1)+'.'+ day && setUser === loggedUser)
     })
     return result;
   }
