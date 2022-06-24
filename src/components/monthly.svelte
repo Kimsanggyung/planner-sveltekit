@@ -40,9 +40,9 @@ import { each } from "svelte/internal";
 	
 	$: calendarCellsQty = numberOfDays + firstDayIndex;
  
-	for(i = 1; i < calendarCellsQty; i++){
-		console.log((i - firstDayIndex) + 1)
-	}
+	// for(i = 1; i < calendarCellsQty; i++){
+	// 	console.log((i - firstDayIndex) + 1)
+	// }
 
 	const goToNextMonth = () => {
 		if (monthIndex >= 11) {
@@ -129,10 +129,12 @@ import { each } from "svelte/internal";
 
 	/* Month header */
 	.month {
+		color:black;
 		padding: 70px 25px;
 		width: auto;
-		background: #1abc9c;
+		background: #0ea5e9;
 		text-align: center;
+		margin-top: 80px;
 	}
 
 	/* Month list */
@@ -166,7 +168,7 @@ import { each } from "svelte/internal";
 	.weekdays {
 		margin: 0;
 		padding: 10px 0;
-		background-color:#ddd;
+		background-color:#e0f2fe;
 	}
 
 	.weekdays li {
@@ -179,9 +181,9 @@ import { each } from "svelte/internal";
 	/* Days (1-31) */
 	.days {
 		padding: 10px 0;
-		background: #eee;
+		width: auto;
+		background: #cffafe;
 		margin: 0;
-		margin-left: 14.5px;
 	}
 
 	.days li {
@@ -189,9 +191,10 @@ import { each } from "svelte/internal";
 		display: inline-block;
 		border: 1px solid black;
 		padding: 9px;
-		width: 13.8%;
+		width: 13.7%;
 		text-align: center;
-		margin-bottom: 1px;
+		margin-bottom: 2px;
+		margin-left: 6px;
 		font-size: 1.2rem;
 		color: #777;
 		cursor: pointer;
@@ -200,7 +203,7 @@ import { each } from "svelte/internal";
 	/* Highlight the "current" day */
 	.active {
 		padding: 5px;
-		background: #1abc9c;
+		background: #0ea5e9;
 		color: white !important
 	}
 </style>

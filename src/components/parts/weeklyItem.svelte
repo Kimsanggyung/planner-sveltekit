@@ -7,7 +7,7 @@
   }
 </script>
 
-<span>
+<span class="w-80">
   {#if data !== undefined}
     {data.setTodoList.setTodo}
   {/if}

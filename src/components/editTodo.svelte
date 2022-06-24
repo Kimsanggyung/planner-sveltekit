@@ -72,15 +72,35 @@
   }
 
 </script>
-<input bind:value={day}>
-<input bind:value={todo}>
-<input bind:value={details}>
-<select id="time" on:change={timeValue}>
-    <option value="not">시간선택</option>
+<div class="flex items-center flex justify-center mt-32 font-jua">
+  <div class="bg-slate-50 w-full h-80 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col flex items-center flex justify-center">
+    <div class="mb-4">
+      <span>일자: </span>
+      <input type="text" bind:value={day} class="border border-gray-500 w-48">
+    </div>
+
+    <div class="mb-4">
+      <span>제목: </span>
+      <input type="text" bind:value={todo} class="border border-gray-500">
+    </div>
+
+    <div class="mb-4">
+      <span>세부내용: </span>
+      <input type="text" bind:value={details} class="border border-gray-500 w-80">
+    </div>
+
+    <div class="mb-4">
+      <label for="start" >시간:</label>
+      <select id="time" on:change={timeValue}>
+      <option value="not">시간선택</option>
     {#each time as {num}, i}
       <option value={num}> {num}시 </option>
     {/each}
 </select>
-
-<button on:click={editTodoDatas}>등록</button>
-<button on:click={cancel}>취소</button>
+    </div>
+    <div class="mt-4">
+      <button on:click={editTodoDatas} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">등록</button>
+      <button on:click={cancel} class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">취소</button>
+    </div>
+  </div>
+</div>

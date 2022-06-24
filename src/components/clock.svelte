@@ -1,5 +1,6 @@
 <script>
  import { onMount } from 'svelte';
+ import moment from 'moment';
 
   let time = new Date();
 
@@ -19,4 +20,4 @@
 
 </script>
 
-<h1 class="m-0">현재시각: {hours}시 {minutes}분 {seconds}초</h1>
+<span class="text-3xl font-jua ml-4 mt-4 mb-4">현재시각: {hours}시 {minutes}분 {seconds}초</span>

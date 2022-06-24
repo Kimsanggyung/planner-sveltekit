@@ -34,13 +34,19 @@
 
 </script>
 
-	<Today/>
-	<Clock/>
-	
 {#if loggedState == true}
+	<div class="border border-yellow-700 rounded w-96 ml-8 mr-10 float-left">
+		<Today/>
+		<Clock/>
+	</div>
 	<Select/>
 {/if}
+
 {#if loggedState == false}
+	<div class="border border-yellow-700 rounded w-96 ml-8 mt-8">
+		<Today/>
+		<Clock/>
+	</div>
 	<Login/>
 {/if}
 {#if checkTodoState == true}

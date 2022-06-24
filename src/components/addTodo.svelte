@@ -41,26 +41,30 @@
  
 </script>
 
-<div>
-  <span>제목: </span>
-  <input type="text" bind:value={todo} class="border border-gray-500">
+<div class="flex items-center flex justify-center mt-32 font-jua">
+  <div class="bg-slate-50 w-96 h-80 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col flex items-center flex justify-center">
+    <div class="mb-4">
+      <span>제목: </span>
+      <input type="text" bind:value={todo} class="border border-gray-500">
+    </div>
+
+    <div class="mb-6">
+      <span>세부내용: </span>
+      <input type="text" bind:value={details} class="border border-gray-500">
+    </div>
+
+    <div class="mb-8">
+      <label for="start" >예정일:</label>
+      <input type="text" name="start" bind:value={$todoDate} class="border border-gray-500 w-24">
+      <select id="time" on:change={timeValue}>
+        <option value="not">시간선택</option>
+        {#each time as {num}}
+          <option value={num}> {num}시 </option>
+        {/each}
+      </select>
+    </div>
+    <div>
+      <button on:click={()=> setItem({setTodoList})}>등록</button>
+    </div>
+  </div>
 </div>
-
-<div>
-  <span>세부내용: </span>
-  <input type="text" bind:value={details} class="border border-gray-500">
-</div>
-
-<div>
-  <label for="start" >예정일:</label>
-  <input type="text" name="start" bind:value={$todoDate} class="border border-gray-500 w-24">
-  <select id="time" on:change={timeValue}>
-    <option value="not">시간선택</option>
-    {#each time as {num}}
-    <option value={num}> {num}시 </option>
-    {/each}
-  </select>
-</div>
-
-<button on:click={()=> setItem({setTodoList})}>등록</button>
-

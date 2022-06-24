@@ -82,18 +82,21 @@
 
 </script>
 <main>
-  <div class="inline-grid text-xl grid-cols-3 w-25">
-    <button on:click={prevDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">Prev</button>
-    <sanp>{year}년 {month+1}월 {day}일</sanp>
-    <button on:click={nextDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">Next</button>
-  </div>
+  <div class="w-full h-32 bg-blue-400 mt-24 font-jua">
+    <div class="font-jua flex item-center flex justify-center text-xl float-none">{year}년</div>
+    <div class="font-jua flex item-center flex justify-center text-xl ">
+      <button on:click={prevDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
+      <span class="text-xl font-bolds">{month+1}월{day}일</span>
+      <button on:click={nextDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
+    </div>
+  </div>  
   {#await getItemPromise}
     <span>데이터 가지고 오는 중....</span>
   {:then data} 
     <div>
       {#each time as {num}}
-        <div on:click={viweAddTodo}> 
-          {num}시:  
+        <div on:click={viweAddTodo} class="text-xl font-jua bg-violet-100 underline cursor-pointer"> 
+          {num}시:
           <DaillyItem data={findData(num, data, day)} />
         </div>
       {/each}

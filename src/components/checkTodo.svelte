@@ -43,13 +43,13 @@
 
 </script>
 
-<div>
+<div class="font-jua underline bg-sky-100 h-full text-2xl">
   {#if getData && getData.length > 0 && checkUser && checkedID && loggedUser === checkedID}
     {#each getData as { setTodoList, id }, idx }
       <span on:click={() => editMode(id)}>
         {idx + 1}. 일자:{setTodoList.setDate} 제목:{setTodoList.setTodo} 내용:{setTodoList.setDetails}
       </span>
-      <button on:click={()=> { deleteTodo(id)}}>X</button>
+      <button class="text-red-500" on:click={()=> { deleteTodo(id)}}>X</button>
       <br/>
     {/each}
   {:else}
