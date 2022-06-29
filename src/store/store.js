@@ -12,7 +12,8 @@ export const stateData = writable({
 	addTodoState: false,
 	checkTodoState: false,
 	edidtTodoState: false,
-	loggedState: false
+	loggedState: false,
+	checkDetailState: false
 });
 
 export const todoDatas = writable({

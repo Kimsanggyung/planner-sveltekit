@@ -5,10 +5,18 @@
   import { todoDate, stateData, todoDatas } from "../store/store";
   import DaillyItem from './parts/dailyItem.svelte';
 
+  let targetID;
+  let loggedID;
+
   const date = new Date();
 	let	month = date.getMonth();
 	let year = date.getFullYear();
   let day = date.getDate();
+
+  
+
+  console.log(targetID)
+  console.log(loggedID)
 
   const getItemPromise = getItem().then(data => {
     return data;
@@ -71,31 +79,39 @@
     })
     return result;
   }
-  
-  const viweAddTodo = () => {
-    stateData.update(value => {
-      value.dailyState = false;
-      value.addTodoState = true;
-      return value;
+
+  const viweDetails = (num, data) => {
+    const result = findData(num, data)
+    console.log(result)
+    targetID =result.id
+    console.log(targetID)
+    stateData.update(state => {
+      state.dailyState = false;
+      state.checkDetailState = true;
+      return state;
+    })
+    todoDatas.update(value => {
+      value.editTargetID = targetID
+      return value
     })
   }
 
 </script>
 <main>
-  <div class="w-full h-32 bg-blue-400 mt-24 font-jua">
+  <div class="w-full h-32 bg-blue-400 mt-24 p-6 font-jua">
     <div class="font-jua flex item-center flex justify-center text-xl float-none">{year}년</div>
-    <div class="font-jua flex item-center flex justify-center text-xl ">
-      <button on:click={prevDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
-      <span class="text-xl font-bolds">{month+1}월{day}일</span>
-      <button on:click={nextDay} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
+    <div class="font-jua flex item-center flex justify-center text-xl mt-2">
+      <button on:click={prevDay} class="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
+      <span class="text-xl ml-4 mr-4 font-bolds">{month+1}월{day}일</span>
+      <button on:click={nextDay} class="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
     </div>
   </div>  
   {#await getItemPromise}
     <span>데이터 가지고 오는 중....</span>
   {:then data} 
-    <div>
+    <div class="p-6 bg-violet-100">
       {#each time as {num}}
-        <div on:click={viweAddTodo} class="text-xl font-jua bg-violet-100 underline cursor-pointer"> 
+        <div on:click={()=>viweDetails(num, data)} class="text-xl font-jua mb-4 underline cursor-pointer"> 
           {num}시:
           <DaillyItem data={findData(num, data, day)} />
         </div>
