@@ -1,6 +1,5 @@
 <script>
 // @ts-nocheck
-  import localforage from 'localforage'
   import { getItem, deleteTodo } from '../store/indexed'
   import { stateData, todoDatas } from '../store/store'
 
@@ -43,7 +42,7 @@
 
 </script>
 
-<div class="font-jua underline bg-sky-100 h-full text-2xl">
+<div class="font-jua underline bg-sky-100 mt-16 h-full text-2xl">
   {#if getData && getData.length > 0 && checkUser && checkedID && loggedUser === checkedID}
     {#each getData as { setTodoList, id }, idx }
       <span on:click={() => editMode(id)}>
