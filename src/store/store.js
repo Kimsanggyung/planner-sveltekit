@@ -33,3 +33,5 @@ export const storeUserData = writable([
 export const todoDate = writable(year+"."+month+'.'+ day);
 
 export const dbInstance = writable();
+
+export const selectTime = writable();
