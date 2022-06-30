@@ -11,6 +11,7 @@
   let details;
   let targetID;
   let loggedID;
+  let selectedTime;
   let getDate = new Date();
   let year = getDate.getFullYear();
   let month = getDate.getMonth()+1;
@@ -26,6 +27,7 @@
     day = value.setTodoList.setDate;
     todo = value.setTodoList.setTodo;
     details = value.setTodoList.setDetails;
+    selectedTime = value.setTodoList.setTime;
   });
 
   $: edidtDatas ={
@@ -56,10 +58,6 @@
 
   const cancel = () =>{
     stateData.update(state => {
-      state.checkTodoState = true;
-      return state;
-    })
-    stateData.update(state => {
       state.edidtTodoState = false;
       return state;
     })
@@ -77,6 +75,7 @@
     <div class="mb-4">
       <span>일자: </span>
       <input type="text" bind:value={day} class="border border-gray-500 w-48">
+      <span>{selectedTime}시</span>
     </div>
 
     <div class="mb-4">

@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 
-  import { stateData, todoDate } from '../store/store'
+  import { stateData, todoDate, selectTime } from '../store/store'
 
   let monthState;
   let weeklyState;
@@ -10,6 +10,7 @@
   let addTodoState;
   let checkTodoState;
   let edidtTodoState;
+  let checkDetailState;
 
   let getDate = new Date();
   let year = getDate.getFullYear();
@@ -23,19 +24,24 @@
     addTodoState = state.addTodoState;
     checkTodoState = state.checkTodoState;
     edidtTodoState = state.edidtTodoState;
+    checkDetailState = state.checkDetailState;
   })
 
 
   const viweMonth = () => {
-      stateData.update(value => {
+    todoDate.update(value => {
+      value = year+"."+month+'.'+ day
+      return value;
+    });
+    stateData.update(value => {
       value.monthState = true;
       return value;
-    })
+    });
     if(weeklyState == true){
         stateData.update(value => {
         value.weeklyState = !value.weeklyState;
         return value;
-      })
+      });
     }
     if(dailyState == true){
       stateData.update(value => {
@@ -61,10 +67,20 @@
         return value;
       })
     }
+    if(checkDetailState == true){
+      stateData.update(value =>{
+        value.checkDetailState = false;
+        return value;
+      })
+    }
   }
 
   const viweWeekly = () => {
-      stateData.update(value => {
+    todoDate.update(value => {
+      value = year+"."+month+'.'+ day
+      return value;
+    })
+    stateData.update(value => {
       value.weeklyState = true;
       return value;
     })
@@ -98,9 +114,19 @@
         return value;
       })
     }
+    if(checkDetailState == true){
+      stateData.update(value =>{
+        value.checkDetailState = false;
+        return value;
+      })
+    }
   }
 
   const viweDaily = () => {
+    todoDate.update(value => {
+      value = year+"."+month+'.'+ day
+      return value;
+    })
     stateData.update(value => {
       value.dailyState = true;
       return value;
@@ -135,9 +161,18 @@
         return value;
       })
     }
+    if(checkDetailState == true){
+      stateData.update(value =>{
+        value.checkDetailState = false;
+        return value;
+      })
+    }
   }
 
   const viweAddTodo = () => {
+    selectTime.update(value => {
+      value = "시간선택"
+    })
     stateData.update(value => {
       value.addTodoState = true;
       return value;
@@ -176,6 +211,12 @@
         return value;
       })
     }
+    if(checkDetailState == true){
+      stateData.update(value =>{
+        value.checkDetailState = false;
+        return value;
+      })
+    }
   }
 
   const viweCheckTodo = () => {
@@ -210,6 +251,12 @@
     if(edidtTodoState == true){
       stateData.update(value => {
         value.edidtTodoState = false;
+        return value;
+      })
+    }
+    if(checkDetailState == true){
+      stateData.update(value =>{
+        value.checkDetailState = false;
         return value;
       })
     }

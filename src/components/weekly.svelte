@@ -1,9 +1,8 @@
 <script>
   // @ts-nocheck
-  import { mount_component } from "svelte/internal";
   import moment from "moment";
   import { getItem } from "../store/indexed";
-  import { stateData, todoDatas } from "../store/store";
+  import { todoDatas, selectTime, stateData } from "../store/store";
   import WeeklyItem from "./parts/weeklyItem.svelte";
 
   const getDate = new Date()
@@ -13,18 +12,11 @@
   let week = getDate.getDay();
 
   let targetDate = (year)+(month)+(date)
-  let stringDate = targetDate.toString()
-
-  console.log(targetDate)
-  console.log(stringDate)
-
   let weekStsrt = moment().day(0).format("DD");
-  const addDay = () => {console.log(moment(stringDate).add(10, 'days').calendar())}
   
- 
-
   let checkUser;
-  let checkedID
+  let checkedID;
+  
   const getItemPromise = getItem().then(data => {
     checkUser = data.find(value => value.setTodoList.setUser == loggedUser)
     if(checkUser){
@@ -107,105 +99,116 @@
       return getWeekEnd = (getWeekEnd-7)+31
     }
     return (getWeekStart -= 7, getWeekEnd -= 7)
-  }
+  };
 
-  const findSunData = (time, data) => {
+  const findWeekData = (time, data, weekStr) => {
+    const weekDataArr = [
+      {day: "일", weekInt: getWeekStart}, {day: "월", weekInt: getWeekStart+1}, {day: "화", weekInt: getWeekStart+2}, {day: "수", weekInt: getWeekStart+3}, {day: "목", weekInt: getWeekStart+4}, {day: "금", weekInt: getWeekStart+5}, {day: "토", weekInt: getWeekEnd}
+    ];
+    const findWeekDay = weekDataArr.find((data)=>{
+      console.log(data)
+      console.log(weekStr)
+      return data.day === weekStr
+    })
+    console.log(findWeekDay)
     const result = data.find(({setTodoList})=>{
       const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart) && loggedUser == checkedID)
+      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) && loggedUser == checkedID)
     })
     return result;
-  }
+  };
 
-  const findMonData = (time, data) => {
-    const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+1) && loggedUser == checkedID)
-    })
-    return result;
-  }
-
-  const findTueData = (time, data) => {
-    const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+2) && loggedUser == checkedID)
-    })
-    return result;
-  }
-
-  const findWedData = (time, data) => {
-    const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+3) && loggedUser == checkedID)
-    })
-    return result;
-  }
-
-  const findThuData = (time, data) => {
-    const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+4) && loggedUser == checkedID)
-    })
-    return result;
-  }
-
-  const findFriData = (time, data) => {
-    const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekStart+5) && loggedUser == checkedID)
-    })
-    return result;
-  }
-
-  const findSatData = (time, data) => {
-    const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(getWeekEnd) && loggedUser == checkedID)
-    })
-    return result;
-  }
-
-
-
-  const viweAddTodo = () =>{
-    stateData.update(value => {
-      value.weeklyState = false;
-      value.addTodoState =true;
+  const viweAddTodo = (num) => {
+    selectTime.update(value => {
+      value = num;
       return value;
+    })
+    stateData.update(state => {
+      state.weeklyState = false;
+      state.addTodoState = true;
+      return state
     })
   }
 
 </script>
 
-<div class="w-full h-32 bg-blue-500 mt-24">
+<div class="w-full h-32 bg-blue-500 p-6 mt-24">
   <div class="font-jua flex item-center flex justify-center text-xl  float-none">{year}년</div>
-  <div class="font-jua flex item-center flex justify-center text-xl ">
-    <button on:click={prevWeek} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
-    <span class="text-xl font-bolds">{month}.{getWeekStart}-{weekMonth+1}.{getWeekEnd}</span>
-    <button on:click={nextWeek} class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
+  <div class="font-jua flex item-center flex justify-center text-xl mt-2 ">
+    <button on:click={prevWeek} class="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
+    <span class="text-xl font-bolds ml-4 mr-4">{month}.{getWeekStart}-{weekMonth+1}.{getWeekEnd}</span>
+    <button on:click={nextWeek} class="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
   </div>
 </div>
-  
-  <table class="text-xl underline w-full bg-sky-100">
-    <tr class="w-40 cursor-pointer" on:click={viweAddTodo}>
-      <th class="w-40">{weekStsrt} 일</th>
-      <th>{getWeekStart+1} 월</th>
-      <th>{getWeekStart+2} 화</th>
-      <th>{getWeekStart+3} 수</th>
-      <th>{getWeekStart+4} 목</th>
-      <th>{getWeekStart+5} 금</th>
-      <th>{getWeekEnd}토  </th>
-    </tr>
-    {#await getItemPromise}
-      <span>데이터 가지고 오는 중....</span>
-    {:then data}
-      <div class="font-jua">
-        {#each time as {num}}
-          <div> 
-            {num}시:  
-            <WeeklyItem data={findWedData(num, data, date)} />
-          </div>
-        {/each}
+  {#await getItemPromise}
+    <span>데이터 가지고 오는 중....</span>
+  {:then data}
+    <div class="text-xl w-full bg-sky-100 p-4 font-jua">
+      <div class="cursor-pointer flex ml-6">
+        <div class="w-1/4">
+          <div class="text-2xl bg-cyan-100 ">{weekStsrt} 일</div>
+          {#each time as {num}}
+              <div class="mt-4">  
+                <span on:click={viweAddTodo}>{num}시:</span> 
+                <WeeklyItem data={findWeekData(num, data, "일")} />
+              </div>
+          {/each}
+        </div>
+        <div class="w-1/4">
+          <div class="text-2xl bg-cyan-100">{getWeekStart+1} 월</div>
+          {#each time as {num}}
+            <div class="mt-4">
+              <span on:click={viweAddTodo}>{num}시:</span> 
+              <WeeklyItem data={findWeekData(num, data , "월")} />
+            </div>
+          {/each}
+        </div>
+        <div class="w-1/4">
+          <div class="text-2xl bg-cyan-100">{getWeekStart+2} 화</div>
+          {#each time as {num}}
+              <div class="mt-4">
+                <span on:click={viweAddTodo}>{num}시:</span> 
+                <WeeklyItem data={findWeekData(num, data, "화")} />
+              </div>
+          {/each}
+        </div>
+        <div class="w-1/4">
+          <div class="text-2xl bg-cyan-100">{getWeekStart+3} 수</div>
+          {#each time as {num}}
+            <div class="mt-4">
+              <span on:click={viweAddTodo}>{num}시:</span> 
+              <WeeklyItem data={findWeekData(num, data, "수")} />
+            </div>
+          {/each}
+        </div>
+        <div class="w-1/4">
+          <div class="text-2xl bg-cyan-100">{getWeekStart+4} 목</div>
+          {#each time as {num}}
+              <div class="mt-4"> 
+                <span on:click={viweAddTodo}>{num}시:</span> 
+                <WeeklyItem data={findWeekData(num, data, "목")} />
+              </div>
+          {/each}
+        </div>
+        <div class="w-1/4">
+          <span class="text-2xl bg-cyan-100">{getWeekStart+5} 금</span>
+          {#each time as {num}}
+            <div class="mt-4"> 
+              <span on:click={viweAddTodo}>{num}시:</span> 
+              <WeeklyItem data={findWeekData(num, data, "금")} />
+            </div>
+          {/each}
+        </div>
+        <div class="w-1/4">
+          <div class="text-2xl bg-cyan-100">{getWeekEnd} 토</div>
+          {#each time as {num}}
+            <div class="mt-4">  
+              <span on:click={viweAddTodo}>{num}시:</span> 
+              <WeeklyItem data={findWeekData(num, data, "토")} />
+            </div>
+          {/each}
+        </div>
       </div>
-    {/await}
-  </table>
+    </div>
+  {/await}
+
