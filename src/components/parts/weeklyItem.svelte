@@ -1,13 +1,27 @@
 <script>
   // @ts-nocheck
-  export let data;
+  import {stateData, todoDatas } from "../../store/store";
 
-  $: {
-    console.log(data)
+  export let data;
+  let targetID;
+
+  const viweDetails = () => {
+    targetID = data.id
+    stateData.update(state => {
+      state.weeklyState = false;
+      state.checkDetailState = true;
+      return state;
+    })
+    todoDatas.update(value => {
+      value.editTargetID = targetID
+      return value
+    })
   }
+
+
 </script>
 
-<span class="w-80">
+<span class="w-80" on:click={viweDetails}>
   {#if data !== undefined}
     {data.setTodoList.setTodo}
   {/if}
