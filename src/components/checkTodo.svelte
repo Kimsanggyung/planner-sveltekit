@@ -17,11 +17,8 @@
     checkUser = getData.find(value => value.setTodoList.setUser == loggedUser)
     if(checkUser){
       checkedID = checkUser.setTodoList.setUser;
-      console.log(checkedID);
     }
   })
-
-  console.log(checkedID)
 
   const editMode = (id) =>{
     stateData.update(state => {

@@ -14,7 +14,6 @@
     todoDatas.subscribe(value => {
       targetID = value.editTargetID
     getItemPromise = getItem(value.editTargetID).then(data => {
-      console.log(data)
         day = data.setTodoList.setDate;
         todo = data.setTodoList.setTodo;
         details = data.setTodoList.setDetails;

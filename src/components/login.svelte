@@ -14,7 +14,7 @@
   todoDatas.subscribe(value =>{
     loggedUser = value.loggedID
   })
-  console.log
+
   const checkUser = (id, pwd) => {
 		const findUser = userData.find(user => user.id === id && user.pwd === pwd)
 		return findUser;
