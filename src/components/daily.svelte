@@ -26,7 +26,7 @@
   ];
 
   const nextDay = () => {
-    const checkMonth = [1,3,5,7,8,9,12]
+    const checkMonth = [1,3,5,7,8,10,12]
     const result = checkMonth.find(value => value == month+1)
 		if (result !== undefined && day >= 31 ) {
 			month += 1;
@@ -40,14 +40,16 @@
       year += 1;
       return month = 0;
     }
-    todoDate.update(date => date = year+"."+(month+1)+'.'+ (day+1))
+    todoDate.update(date => {
+      date = year+"."+(month+1)+'.'+ (day+1)
+      return date
+    })
     return day += 1;
 	}
 	
 	const prevDay = () => {
-    const checkMonth = [1,3,5,7,8,9,12]
+    const checkMonth = [1,3,5,7,8,10,12]
     const result = checkMonth.find(value => value == month+1)
-    console.log(month, result)
 		if (result !== undefined && day <= 1) {
 			month -= 1;
 			return day = 30;
