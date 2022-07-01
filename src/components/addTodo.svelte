@@ -3,8 +3,6 @@
   import { todoDatas, todoDate, selectTime } from '../store/store'
   import { setItem } from '../store/indexed'
 
-  let text;
-  let value;
   let todo = '';
   let details = '';
   let loggedUser;
@@ -22,7 +20,6 @@
   todoDate.subscribe(value => {
     selectDate = value;
   })
-
   selectTime.subscribe(value => {
     selectedTime = value;
   })
@@ -30,8 +27,8 @@
   $: setTodoList = {
 	  setTodo: todo,
 	  setDetails: details,
-    setDate: setDate,
-    setTime: value,
+    setDate: selectDate,
+    setTime: selectedTime,
     setUser: loggedUser
   }
 
@@ -42,12 +39,13 @@
   
   const timeValue = () => {
     let target = document.getElementById("time")
-    value = target.options[target.selectedIndex].value;
-    text =  target.options[target.selectedIndex].text;
-    console.log(value)
-    console.log(text)
+    let timeValue = target.options[target.selectedIndex].value;
+    // selectTime.update(selectValue => {
+    //   selectValue = timeValue
+    //   return selectValue
+    // })
   }
- 
+
 </script>
 
 <div class="flex items-center flex justify-center mt-32 font-jua">
@@ -65,8 +63,8 @@
     <div class="mb-8">
       <label for="start" >예정일:</label>
       <input type="text" name="start" bind:value={selectDate} class="border border-gray-500 w-24">
-      <select id="time" bind:value={selectedTime} on:change={timeValue}>
-        <option value="not">시간선택</option>
+      <select id="time" bind:value={selectedTime}>
+        <option value="시간선택">시간선택</option>
         {#each time as {num}}
           <option value={num}> {num}시 </option>
         {/each}

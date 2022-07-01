@@ -1,7 +1,7 @@
 <script>
 // @ts-nocheck
 
-  import { stateData, dbInstance, todoDatas } from '../store/store';
+  import { stateData, dbInstance, todoDatas, selectTime } from '../store/store';
   import { getItem } from '../store/indexed';
   
   let idb;
@@ -18,6 +18,9 @@
   let date = getDate.getDate();
 
   dbInstance.subscribe(idxdb => idb = idxdb)
+  selectTime.subscribe(value => {
+    selectedTime = value;
+  })
   todoDatas.subscribe(value => {
     targetID = value.editTargetID
     loggedID = value.loggedID
@@ -34,7 +37,7 @@
     setDate: day,
     setTodo: todo,
     setDetails: details,
-    setTime: value,
+    setTime: selectedTime,
     setUser: loggedID
   }
 
@@ -65,10 +68,9 @@
 
   const timeValue = () => {
     let target = document.getElementById("time")
-    value = target.options[target.selectedIndex].value;
-    console.log(value)
+    let timeValue = target.options[target.selectedIndex].value;
   }
-
+  
 </script>
 <div class="flex items-center flex justify-center mt-32 font-jua">
   <div class="bg-slate-50 w-full h-80 shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col flex items-center flex justify-center">
@@ -90,9 +92,9 @@
 
     <div class="mb-4">
       <label for="start" >시간:</label>
-      <select id="time" on:change={timeValue}>
-      <option value="not">시간선택</option>
-    {#each time as {num}, i}
+      <select id="time" bind:value={selectedTime} on:change={timeValue}>
+      <option value="시간선택">시간선택</option>
+    {#each time as {num}}
       <option value={num}> {num}시 </option>
     {/each}
 </select>

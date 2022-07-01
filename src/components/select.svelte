@@ -172,6 +172,7 @@
   const viweAddTodo = () => {
     selectTime.update(value => {
       value = "시간선택"
+      return value;
     })
     stateData.update(value => {
       value.addTodoState = true;
@@ -264,18 +265,18 @@
 
 </script>
 <span class="font-jua flex item-center text-white flex flex justify-center text-xl float-left float-right ml-80 mt-6">
-  <span class="bg-red-500 hover:bg-green-500 text-white py-2 px-4 border border-blue-700 rounded mr-1">
-    <button on:click={viweMonth}>월간</button>
+  <span on:click={viweMonth} class="bg-red-500 hover:bg-green-500 text-white py-2 px-4 border border-blue-700 rounded mr-1">
+    <button>월간</button>
   </span>
-  <span class="bg-orange-500 hover:bg-blue-500 text-white py-2 px-4 border border-blue-700 rounded mr-1">
-    <button on:click={viweWeekly}>주간</button>
+  <span on:click={viweWeekly} class="bg-orange-500 hover:bg-blue-500 text-white py-2 px-4 border border-blue-700 rounded mr-1">
+    <button>주간</button>
   </span>
-  <span class="bg-green-500 hover:bg-orange-500 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-    <button on:click={viweDaily}>일간</button>
+  <span on:click={viweDaily} class="bg-green-500 hover:bg-orange-500 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+    <button>일간</button>
   </span>
 </span>
 
 <span class="font-jua text-s mr-8 mt-10 flex justify-end">
-  <button on:click={viweAddTodo} class="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mr-2">일정추가</button>
-  <button on:click={viweCheckTodo} class="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">일정확인</button>
+  <button on:click={viweAddTodo} class="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mr-2">오늘일정추가</button>
+  <button on:click={viweCheckTodo} class="bg-sky-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">전체일정확인</button>
 </span>
