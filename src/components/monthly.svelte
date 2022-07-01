@@ -2,18 +2,12 @@
 	// @ts-nocheck
 	import { getItem } from "../store/indexed";
 	import MonthlyItem from "./parts/monthlyItem.svelte";
-	import { stateData, dbInstance, todoDatas } from "../store/store";
-import { each } from "svelte/internal";
+	import { stateData, todoDatas, todoDate } from "../store/store";
 
 	// let getItem = null;
-	let getItemPromise;
-	dbInstance.subscribe(db => {
-		if(db){			
-			getItemPromise = getItem().then(data => {
-				return data;
-			});
-		}
-	});	
+	const getItemPromise = getItem().then(data => {
+    return data;
+  });
 
 	let loggedUser;
 	todoDatas.subscribe(value => {
@@ -40,10 +34,6 @@ import { each } from "svelte/internal";
 	
 	$: calendarCellsQty = numberOfDays + firstDayIndex;
  
-	// for(i = 1; i < calendarCellsQty; i++){
-	// 	console.log((i - firstDayIndex) + 1)
-	// }
-
 	const goToNextMonth = () => {
 		if (monthIndex >= 11) {
 			year += 1;
@@ -60,17 +50,13 @@ import { each } from "svelte/internal";
 		return monthIndex -= 1;
 	}
 
-	// const findData = (time, data) => {
-  //   const result = data.find(({setTodoList})=>{
-  //     const {setTime, setDate, setUser} = setTodoList;
-  //     return (parseInt(setTime) === time && setDate === year+"."+(month+1)+'.'+ day && setUser === loggedUser)
-  //   })
-  //   return result;
-  // }
-
-	$: console.log(calendarCellsQty)
-
-	const viweAddTodo = () =>{
+	const viweAddTodo = (i,firstDayIndex) =>{
+		const selectDate = ((i-firstDayIndex)+1)
+		console.log(selectDate)
+		todoDate.update(value => {
+			value = year+"."+(monthIndex+1)+"."+selectDate
+			return value;
+		})
     stateData.update(value => {
       value.monthState = false;
       value.addTodoState =true;
@@ -79,6 +65,8 @@ import { each } from "svelte/internal";
   }
 	
 	$: console.log(`${month}, ${today.dayNumber}, ${year}, FIRST DAY index is ${firstDayIndex}, MONTH index is ${monthIndex}, No. of days: ${numberOfDays}`)
+
+	// $: checkDate = { year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)}
 
 </script>
 
@@ -103,19 +91,19 @@ import { each } from "svelte/internal";
 		<li>토</li>
 	</ul>
 	{#await getItemPromise}
-      <span>데이터 가지고 오는 중....</span>
-    {:then data} 
+			<span>데이터 가지고 오는 중....</span>
+		{:then data} 
 		<ul class="days">
 			{#each Array(calendarCellsQty) as _, i}
 				{#if i < firstDayIndex || i >= numberOfDays+firstDayIndex  }
-					<li>&nbsp;</li>
+					<li>
+						<div>&nbsp;</div>
+						<div class="w-48 h-7 overflow-hidden"></div>
+					</li>
 				{:else}
-					<li on:click={viweAddTodo} class:active={i === today.dayNumber+(firstDayIndex-1) &&
-														monthIndex === today.month &&
-														year === today.year}>
-
-						{(i - firstDayIndex) + 1}
-						<!-- <MonthlyItem data={findData(data, date)} /> -->
+					<li class:active={i === today.dayNumber+(firstDayIndex-1) && monthIndex === today.month && year === today.year}>
+						<div class="dateList" on:click={()=>viweAddTodo(i ,firstDayIndex)}>{(i - firstDayIndex) + 1}</div>
+						<MonthlyItem month={month} getDate = {year+"."+(monthIndex+1)+'.'+((i - firstDayIndex) + 1)} />
 					</li>
 				{/if}
 			{/each}
@@ -125,6 +113,8 @@ import { each } from "svelte/internal";
 
 				
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 	ul {list-style-type: none;}
 
 	/* Month header */
@@ -135,6 +125,7 @@ import { each } from "svelte/internal";
 		background: #0ea5e9;
 		text-align: center;
 		margin-top: 80px;
+		font-family: 'Jua', sans-serif;
 	}
 
 	/* Month list */
@@ -166,6 +157,7 @@ import { each } from "svelte/internal";
 
 	/* Weekdays (Mon-Sun) */
 	.weekdays {
+		font-family: 'Jua', sans-serif;
 		margin: 0;
 		padding: 10px 0;
 		background-color:#e0f2fe;
@@ -180,24 +172,30 @@ import { each } from "svelte/internal";
 
 	/* Days (1-31) */
 	.days {
+		font-family: 'Jua', sans-serif;
 		padding: 10px 0;
 		width: auto;
 		background: #cffafe;
 		margin: 0;
 	}
-
 	.days li {
 		list-style-type: none;
 		display: inline-block;
 		border: 1px solid black;
 		padding: 9px;
 		width: 13.7%;
+		height: 84px;
 		text-align: center;
-		margin-bottom: 2px;
+		margin-top: 6px;
+		margin-bottom: 0px;
 		margin-left: 6px;
 		font-size: 1.2rem;
 		color: #777;
 		cursor: pointer;
+	}
+
+	.dateList{
+		text-decoration: underline;
 	}
 
 	/* Highlight the "current" day */
