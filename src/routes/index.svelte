@@ -10,10 +10,11 @@
 	import Weekly from '../components/weekly.svelte';
 	import Daily from '../components/daily.svelte';
 	import Select from '../components/select.svelte';
-	import CheckTodo from '../components/checkTodo.svelte'
-	import EditTodo from '../components/editTodo.svelte'
-	import Login from '../components/login.svelte'
-	import CheckDetail from '../components/checkDetail.svelte'
+	import CheckTodo from '../components/checkTodo.svelte';
+	import EditTodo from '../components/editTodo.svelte';
+	import Login from '../components/login.svelte';
+	import CheckDetail from '../components/checkDetail.svelte';
+	import SignUp from '../components/signUp.svelte'
 	
 	let monthState;
 	let weeklyState;
@@ -22,7 +23,8 @@
 	let checkTodoState;
 	let editTodoState;
 	let loggedState;
-	let detailState
+	let singUpState;
+	let detailState;
 
 	stateData.subscribe(state => {
 		monthState = state.monthState;
@@ -33,11 +35,12 @@
 		editTodoState = state.edidtTodoState;
 		loggedState = state.loggedState;
 		detailState = state.checkDetailState
+		singUpState = state.signUpState
 	})
 
 </script>
 
-{#if loggedState == true}
+{#if loggedState === true}
 	<div class="border border-yellow-700 rounded w-96 ml-8 mr-10 float-left">
 		<Today/>
 		<Clock/>
@@ -45,31 +48,48 @@
 	<Select/>
 {/if}
 
-{#if loggedState == false}
+{#if singUpState == true && loggedState == false}
+	<div class="border border-yellow-700 rounded w-96 ml-8 mt-8">
+		<Today/>
+		<Clock/>
+	</div>
+	<SignUp/>
+{/if}
+
+{#if loggedState == false && singUpState === false}
 	<div class="border border-yellow-700 rounded w-96 ml-8 mt-8">
 		<Today/>
 		<Clock/>
 	</div>
 	<Login/>
 {/if}
+
+
+
 {#if checkTodoState == true}
 	<CheckTodo/>
 {/if}
+
 {#if detailState}
 	<CheckDetail/>
 {/if}
+
 {#if editTodoState == true}
 	<EditTodo/>
 {/if}
+
 {#if addTodoState == true}
 <AddTodo/>
 {/if}
+
 {#if monthState == true && loggedState == true}
 <Month/>
 {/if}
+
 {#if weeklyState}
 <Weekly/>
 {/if}
+
 {#if dailyState}
 	<Daily/>
 {/if}
