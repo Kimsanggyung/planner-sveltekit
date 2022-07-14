@@ -9,6 +9,8 @@
 	let	month = date.getMonth();
 	let year = date.getFullYear();
   let day = date.getDate();
+  $: thisMonthlast = new Date(year, month+1, 0).getDate();
+  $: beforeMonthLast = new Date(year, month, 0).getDate();
 
   const getItemPromise = getItem().then(data => {
     return data;
@@ -26,13 +28,7 @@
   ];
 
   const nextDay = () => {
-    const checkMonth = [1,3,5,7,8,10,12]
-    const result = checkMonth.find(value => value == month+1)
-		if (result !== undefined && day >= 31 ) {
-			month += 1;
-			return day = 1;
-    }
-    if (result == undefined && day >= 30 ) {
+		if (day >= thisMonthlast ) {
 			month += 1;
 			return day = 1;
     }
@@ -48,15 +44,9 @@
 	}
 	
 	const prevDay = () => {
-    const checkMonth = [1,3,5,7,8,10,12]
-    const result = checkMonth.find(value => value == month+1)
-		if (result !== undefined && day <= 1) {
+		if (day <= 1) {
 			month -= 1;
-			return day = 30;
-		}
-    if (result == undefined && day <= 1) {
-			month -= 1;
-			return day = 31;
+			return day = beforeMonthLast;
 		}
     if(month <= 0){
       year -= 1;
