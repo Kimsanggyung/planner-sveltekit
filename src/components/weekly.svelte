@@ -15,6 +15,11 @@
   
   let checkUser;
   let checkedID;
+
+  let loggedUser;
+  todoDatas.subscribe(value => {
+    loggedUser = value.loggedID;
+  })
   
   const getItemPromise = getItem().then(data => {
     checkUser = data.find(value => value.setTodoList.setUser == loggedUser)
@@ -23,11 +28,6 @@
     }
     return data;
   });
-
-  let loggedUser;
-  todoDatas.subscribe(value => {
-    loggedUser = value.loggedID;
-  })
 
   const time = [
     {num:0},{num:1},{num:2},{num:3},{num:4},{num:5},{num:6},{num:7},{num:8},{num:9},{num:10},
@@ -120,7 +120,6 @@
   };
 
   const viweAddTodo = (num, date) => {
-    console.log(date)
     todoDate.update(value => {
       value = year+"."+month+'.'+ date
       return value;

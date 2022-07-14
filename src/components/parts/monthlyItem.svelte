@@ -17,8 +17,8 @@
   afterUpdate(async() => {
     getItemPromise = await getItem().then(data => {
       const getData = data.find(({setTodoList})=>{
-          const {setDate, setUser} = setTodoList;
-          return (setDate === getDate && setUser === loggedUser)
+        const {setDate, setUser} = setTodoList;
+        return (setDate === getDate && setUser === loggedUser)
       })
       if(getData){
         targetID = getData.id
