@@ -35,6 +35,15 @@
     })
   }
 
+  const cancel = (id) => {
+    deleteTodo(id)
+    stateData.update(state =>{
+      state.monthState = true;
+      state.checkTodoState = false;
+      return state
+    })
+  }
+
   
 
 </script>
@@ -45,7 +54,7 @@
       <span on:click={() => editMode(id)}>
         {idx + 1}. 일자:{setTodoList.setDate} 제목:{setTodoList.setTodo} 내용:{setTodoList.setDetails}
       </span>
-      <button class="text-red-500" on:click={()=> { deleteTodo(id)}}>X</button>
+      <button class="text-red-500" on:click={()=> {cancel(id)}}>X</button>
       <br/>
     {/each}
   {:else}

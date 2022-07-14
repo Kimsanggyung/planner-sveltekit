@@ -1,10 +1,12 @@
 <script>
 // @ts-nocheck
-  import { todoDatas, todoDate, selectTime } from '../store/store'
+  import { todoDatas, todoDate, selectTime, stateData } from '../store/store'
   import { setItem } from '../store/indexed'
+  import AddError from './parts/addError.svelte'
 
   let todo = '';
   let details = '';
+  let error = ''
   let loggedUser;
   let selectDate;
   let selectedTime;
@@ -37,6 +39,28 @@
     {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
   ]
   
+  const submit = () => {
+    if(selectedTime === "시간선택"){ 
+      error = "일정시간을 선택해주세요"
+      console.log("일정시간을 선택해주세요")
+    }
+    if(details === ""){
+      error = "상세내용을 입력해주세요"
+      console.log("상세내용을 입력해주세요")
+    }
+    if(todo === ""){
+      error = "제목을 입력해주세요"
+      console.log("제목을 입력해주세요")
+    }
+    if(selectedTime !== "시간선택" && todo !== "" && details !== ""){
+      setItem({setTodoList})
+      stateData.update(state => {
+        state.addTodoState = false
+        state.monthState = true
+        return state
+      })
+    }
+  }
   const timeValue = () => {
     let target = document.getElementById("time")
     let timeValue = target.options[target.selectedIndex].value;
@@ -63,7 +87,7 @@
     <div class="mb-8">
       <label for="start" >예정일:</label>
       <input type="text" name="start" bind:value={selectDate} class="border border-gray-500 w-24">
-      <select id="time" bind:value={selectedTime}>
+      <select id="time" bind:value={selectedTime} on>
         <option value="시간선택">시간선택</option>
         {#each time as {num}}
           <option value={num}> {num}시 </option>
@@ -71,7 +95,10 @@
       </select>
     </div>
     <div>
-      <button on:click={()=> setItem({setTodoList})}>등록</button>
+      <AddError errorMessege={error}/>
+    </div>
+    <div>
+      <button on:click={submit}>등록</button>
     </div>
   </div>
 </div>

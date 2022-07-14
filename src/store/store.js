@@ -14,7 +14,8 @@ export const stateData = writable({
 	edidtTodoState: false,
 	loggedState: false,
 	checkDetailState: false,
-	signUpState: false
+	signUpState: false,
+	checkIdState: false
 });
 
 export const todoDatas = writable({
@@ -36,4 +37,5 @@ export const todoDate = writable(year+"."+month+'.'+ day);
 export const dbInstance = writable();
 
 export const selectTime = writable();
+
 

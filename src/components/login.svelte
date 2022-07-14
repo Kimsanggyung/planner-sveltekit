@@ -3,15 +3,17 @@
   import { stateData, storeUserData, todoDatas, dbInstance } from '../store/store'
   import { getItem } from '../store/indexed'
   import CryptoJS from "crypto-js";
+  import LoginError from './parts/loginError.svelte'
 
   let getData
   let userData;
   let loggedUser;
   let inputId = '';
   let inputPwd  = '';
-  let checkIndexUser;
+  let findIndexedUser;
   let saltKey = 'nuguseyo'
-  const hashPwd =  CryptoJS.MD5(inputPwd+saltKey).toString();
+  let error = ""
+  $: hashPwd =  CryptoJS.MD5(inputPwd+saltKey).toString();
 
   storeUserData.subscribe(value => {
     userData = value;
@@ -27,23 +29,32 @@
 
   const login = () => {
     getItem().then(data => {
-    getData = data;
-    checkIndexUser = getData.find(value => value.userId == inputId && value.userPwd)
-    if(checkIndexUser){
-      console.log(checkIndexUser)
-    }
-  })
-    const findUser = checkUser(inputId, inputPwd);
-    if(findUser){
-      stateData.update(state => {
-        state.loggedState = true;
-        return state;
+      data.find(({userData})=>{
+        if (!userData) return false;
+        findIndexedUser = userData.userId === inputId && userData.userPwd === hashPwd
+        if(inputPwd === ""){
+          error = "비밀번호를 입력해주세요"
+          console.log("비밀번호를 입력해주세요")
+        }
+        if(inputId === ""){
+          error = "아이디를 입력해주세요"
+          console.log("아이디를 입력해주세요")
+        }
+        if(inputId !== "" && inputPwd !== ""){
+          const findUser = checkUser(inputId, inputPwd);
+          if(findUser || findIndexedUser){
+            stateData.update(state => {
+              state.loggedState = true;
+              return state;
+            })
+            todoDatas.update(vaule =>{
+              vaule.loggedID = inputId;
+              return vaule;
+            })
+          }
+        }
       })
-      todoDatas.update(vaule =>{
-        vaule.loggedID = inputId;
-        return vaule;
-      })
-    }
+    })
   }
 
   const singUp = () => {
@@ -68,6 +79,9 @@
     </div>
     <div class="flex items-center justify-between">
       <button on:click={login} class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">로그인</button>
+    </div>
+    <div>
+      <LoginError errorMessege={error}/>
     </div>
     <div class="flex items-center justify-between">
       <button on:click={singUp} class="text-blue-600 mt-4 underline underline-offset-2">회원가입</button>
