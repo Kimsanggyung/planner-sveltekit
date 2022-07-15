@@ -11,21 +11,12 @@
   let date = getDate.getDate();
   let week = getDate.getDay();
 
-  let weekStsrt = moment().day(0).format("DD");
-  
-  let checkUser;
-  let checkedID;
-
   let loggedUser;
   todoDatas.subscribe(value => {
     loggedUser = value.loggedID;
   })
-  
+
   const getItemPromise = getItem().then(data => {
-    checkUser = data.find(value => value.setTodoList.setUser == loggedUser)
-    if(checkUser){
-      checkedID = checkUser.setTodoList.setUser;
-    }
     return data;
   });
 
@@ -113,8 +104,9 @@
       return data.day === weekStr
     })
     const result = data.find(({setTodoList})=>{
-      const {setTime, setDate} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) && loggedUser == checkedID)
+      if (!setTodoList) return false;
+      const {setTime, setDate, setUser} = setTodoList;
+      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) && setUser == loggedUser)
     })
     return result;
   };
@@ -134,6 +126,8 @@
       return state
     })
   }
+
+  
 
 
 </script>
