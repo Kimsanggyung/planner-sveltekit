@@ -124,7 +124,7 @@
 		width: auto;
 		background: #0ea5e9;
 		text-align: center;
-		margin-top: 80px;
+		margin-top: 100px;
 		font-family: 'Jua', sans-serif;
 	}
 

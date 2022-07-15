@@ -264,7 +264,7 @@
   }
 
 </script>
-<span class="font-jua flex item-center text-white flex flex justify-center text-xl float-left float-right ml-80 mt-6">
+<span class="font-jua flex item-center text-white flex flex justify-center text-xl float-left float-right ml-96 mt-6">
   <span on:click={viweMonth} class="bg-red-500 hover:bg-green-500 text-white py-2 px-4 border border-blue-700 rounded mr-1">
     <button>월간</button>
   </span>
