@@ -5,11 +5,19 @@
   import { todoDatas, selectTime, stateData, todoDate } from "../store/store";
   import WeeklyItem from "./parts/weeklyItem.svelte";
 
-  const getDate = new Date()
-  let year = getDate.getFullYear();
-  let month = getDate.getMonth()+1;
-  let date = getDate.getDate();
-  let week = getDate.getDay();
+  let getDate = new Date();
+  $: year = getDate.getFullYear();
+  $: month = getDate.getMonth()+1;
+  $: date = getDate.getDate();
+  $: week = getDate.getDay();
+  $: thisMonthLast = new Date(year, month, 0).getDate();
+  $: beforeMonthLast = new Date(year, month-1, 0).getDate();
+  $: {
+    console.log(getDate, year, month, date, week);
+  }  
+
+  console.log(thisMonthLast)
+  console.log(beforeMonthLast)
 
   let loggedUser;
   todoDatas.subscribe(value => {
@@ -25,89 +33,54 @@
     {num:11},{num:12},{num:13},{num:14},{num:15},{num:16},{num:17},{num:18},{num:19},{num:20},{num:21},{num:22},{num:23},{num:24}
   ]
 
-  let weekStartDate = new Date(year, month, date - week);
-  let weekEndDate = new Date(year, month, date + (6 - week));
+  $: weekStartDate = new Date(year, month, date - week);
+  $: weekEndDate = new Date(year, month, date + (6 - week));
 
-  let weekMonth = getDate.getMonth();
-  let weekDay;
-
-  const formatDate = (date) => {
-    weekDay = date.getDate();
-    return (weekDay);
-  }
+  $: weekMonth = getDate.getMonth();
   
-  let getWeekStart = formatDate(weekStartDate)
-  let getWeekEnd = formatDate(weekEndDate)
+  $: getWeekStart = weekStartDate.getDate();
+  $: getWeekEnd = weekEndDate.getDate();
 
-  let monDate = getWeekStart+1;
-  let tueDate = getWeekStart+2
-  let wedDate = getWeekStart+3;
-  let thuDate = getWeekStart+4
-  let friDate = getWeekStart+5
+  const getAddDate = (date, num) => {
+    const temp = new Date(date);
+    temp.setDate(temp.getDate() + num);
+    return temp.getDate();
+  }
+
+  $: monDate = getAddDate(weekStartDate, 1);
+  $: tueDate = getAddDate(weekStartDate, 2);
+  $: wedDate = getAddDate(weekStartDate, 3);
+  $: thuDate = getAddDate(weekStartDate, 4);
+  $: friDate = getAddDate(weekStartDate, 5);
+  $: {
+    console.log(getWeekStart, monDate, tueDate, wedDate, thuDate, friDate, getWeekEnd);
+  }
 
   const nextWeek = () => {
-    const checkMonth = [1,3,5,7,8,10,12]
-    const result = checkMonth.find(check => check == month)
-    if(month >=12){
-      year+1
-    }
-    if(result !== undefined && getWeekStart >= 24){
-      month +=1;
-      return getWeekStart = (getWeekStart+7)-30
-    }
-    if(result == undefined && getWeekEnd >= 24){
-      weekMonth +=1;
-      return getWeekEnd = (getWeekEnd+7)-30
-    }
-    if(result == undefined && getWeekStart >= 23){
-      month +=1;
-      return getWeekStart = (getWeekStart+7)-31
-    }
-    if(result == undefined && getWeekEnd >= 23){
-      weekMonth +=1;
-      return getWeekEnd = (getWeekEnd+7)-31
-    }
-    return (getWeekStart+= 7, getWeekEnd += 7)
+    getDate.setDate(getDate.getDate() + 7);
+    getDate = getDate;
+    return;
   }
 
   const prevWeek = () => {
-    const checkMonth = [1,3,5,7,8,10,12]
-    const result = checkMonth.find(check => check == month)
-    if(month <=1 ){
-      year -=1;
-      return month = 12;
-    }
-    if(result !== undefined && getWeekStart <= 1){
-      month -= 1;
-      return getWeekStart = (getWeekStart-7)+30
-    }
-    if(result !== undefined && getWeekEnd <=1){
-      weekMonth -= 1;
-      return getWeekEnd = (getWeekEnd-7)+30
-    }
-    if(result == undefined && getWeekStart <= 1){
-      month -= 1;
-      return getWeekStart = (getWeekStart-7)+31
-    }
-    if(result == undefined && getWeekEnd <=1){
-      weekMonth -= 1;
-      return getWeekEnd = (getWeekEnd-7)+31
-    }
-    return (getWeekStart -= 7, getWeekEnd -= 7)
+    getDate.setDate(getDate.getDate() - 7);
+    getDate = getDate;
+    return;
   };
 
-  const findWeekData = (time, data, weekStr) => {
+  $: findWeekData = (time, data, weekStr) => {
     const weekDataArr = [
       {day: "일", weekInt: getWeekStart}, {day: "월", weekInt: getWeekStart+1}, {day: "화", weekInt: getWeekStart+2}, {day: "수", weekInt: getWeekStart+3}, {day: "목", weekInt: getWeekStart+4}, {day: "금", weekInt: getWeekStart+5}, {day: "토", weekInt: getWeekEnd}
     ];
+    console.log(getWeekStart)
     const findWeekDay = weekDataArr.find((data)=>{
       return data.day === weekStr
-    })
+    });
     const result = data.find(({setTodoList})=>{
       if (!setTodoList) return false;
       const {setTime, setDate, setUser} = setTodoList;
       return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) && setUser == loggedUser)
-    })
+    });
     return result;
   };
 
@@ -115,17 +88,17 @@
     todoDate.update(value => {
       value = year+"."+month+'.'+ date
       return value;
-    })
+    });
     selectTime.update(value => {
       value = num;
       return value;
-    })
+    });
     stateData.update(state => {
       state.weeklyState = false;
       state.addTodoState = true;
       return state
-    })
-  }
+    });
+  };
 
   
 
@@ -136,7 +109,7 @@
   <div class="font-jua flex item-center flex justify-center text-xl  float-none">{year}년</div>
   <div class="font-jua flex item-center flex justify-center text-xl mt-2 ">
     <button on:click={prevWeek} class="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-l">저번주</button>
-    <span class="text-xl font-bolds ml-4 mr-4">{month}.{getWeekStart}-{weekMonth+1}.{getWeekEnd}</span>
+    <span class="text-xl font-bolds ml-4 mr-4">{weekStartDate.getMonth()}.{getWeekStart}-{weekEndDate.getMonth()}.{getWeekEnd}</span>
     <button on:click={nextWeek} class="h-6 w-16 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-r">다음주</button>
   </div>
 </div>
