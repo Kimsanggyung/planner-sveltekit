@@ -14,6 +14,7 @@
   let loggedID;
   let selectedTime;
   let error = "";
+  const pattern = /(^\d{4}).([1-9]|1[0-2]).([1-9]|[12][0-9]|3[01])$/
   
   let getDate = new Date();
   let year = getDate.getFullYear();
@@ -62,7 +63,11 @@
       error = "제목을 입력해주세요"
       console.log("제목을 입력해주세요")
     }
-    if(todo !== "" && details !== "" && selectedTime !== "시간선택"){
+    if(!pattern.test(day)){
+      error = "정확한 날짜를 입력해주세요"
+      console.log("정확한 날짜를 입력해주세요")
+    }
+    if(todo !== "" && details !== "" && selectedTime !== "시간선택" && pattern.test(day)){
       let store = idb.transaction('datas', 'readwrite').objectStore('datas');
       let putReq = store.put({
         id:(targetID),

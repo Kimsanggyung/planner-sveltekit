@@ -15,6 +15,7 @@
   let month = getDate.getMonth()+1;
   let date = getDate.getDate();
   let setDate = year + '.' + month + '.' + date
+  const pattern = /(^\d{4}).([1-9]|1[0-2]).([1-9]|[12][0-9]|3[01])$/
 
   todoDatas.subscribe(value => {
     loggedUser = value.loggedID
@@ -51,8 +52,11 @@
     if(todo === ""){
       error = "제목을 입력해주세요"
       console.log("제목을 입력해주세요")
+    }if(!pattern.test(selectDate)){
+      error = "정확한 날짜를 입력해주세요"
+      console.log("정확한 날짜를 입력해주세요")
     }
-    if(selectedTime !== "시간선택" && todo !== "" && details !== ""){
+    if(selectedTime !== "시간선택" && todo !== "" && details !== "" && pattern.test(selectDate)){
       setItem({setTodoList})
       stateData.update(state => {
         state.addTodoState = false
