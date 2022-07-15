@@ -15,6 +15,7 @@
 	import Login from '../components/login.svelte';
 	import CheckDetail from '../components/checkDetail.svelte';
 	import SignUp from '../components/signUp.svelte'
+	import Welcome from '../components/welcome.svelte'
 	
 	let monthState;
 	let weeklyState;
@@ -42,6 +43,7 @@
 
 {#if loggedState === true}
 	<div class="border border-yellow-700 rounded w-96 ml-8 mr-10 float-left">
+		<Welcome/>
 		<Today/>
 		<Clock/>
 	</div>
