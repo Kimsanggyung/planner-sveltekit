@@ -39,7 +39,6 @@
     if(checkState === false){
       error = "아이디 중복확인을 해주세요."
     }
-    console.log(inputPwd)
     if(inputID === null){
       error = "아이디를 입력해 주세요."
     }
@@ -65,11 +64,36 @@
 
   const checkId = () => {
     getItem().then(data => {
-      data.find(({userData})=>{
-        if (!userData) return false;
-        const checkInputId = storeUser.userId === inputID
+      console.log(data.length)
+      if(data.length !== 0){
+        data.find(({userData})=>{
+          if (!userData) return false;
+          console.log(userData)
+          const checkInputId = userData.userId === inputID
+          const findId = checkUser(inputID);
+          if(checkInputId || findId){
+            error = "이미사용되고있는 아이디입니다."
+            console.log("이미사용되고있는 아이디입니다.")
+            stateData.update(state => {
+              state.checkIdState = false
+              console.log(checkState)
+              return state
+            })
+          }
+          if(!checkInputId && !findId){
+            error = ""
+            checked = "사용가능한 아이디입니다."
+            stateData.update(state => {
+              state.checkIdState = true
+              console.log(checkState)
+              return state
+            })
+          }
+        })
+      }
+      if(data.length == 0){
         const findId = checkUser(inputID);
-        if(checkInputId || findId){
+        if(findId){
           error = "이미사용되고있는 아이디입니다."
           console.log("이미사용되고있는 아이디입니다.")
           stateData.update(state => {
@@ -78,7 +102,7 @@
             return state
           })
         }
-        if(!checkInputId && !findId){
+        if(!findId){
           error = ""
           checked = "사용가능한 아이디입니다."
           stateData.update(state => {
@@ -87,9 +111,8 @@
             return state
           })
         }
-      })
+      }
     })
-    console.log(checkState)
   }
 
 </script>

@@ -58,6 +58,7 @@
 
   const findData = (time, data) => {
     const result = data.find(({setTodoList})=>{
+      if (!setTodoList) return false;
       const {setTime, setDate, setUser} = setTodoList;
       return (parseInt(setTime) === time && setDate === year+"."+(month+1)+'.'+ day && setUser === loggedUser)
     })

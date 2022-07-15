@@ -29,9 +29,34 @@
 
   const login = () => {
     getItem().then(data => {
-      data.find(({userData})=>{
-        if (!userData) return false;
-        findIndexedUser = userData.userId === inputId && userData.userPwd === hashPwd
+      if(data.length !== 0){
+        data.find(({userData})=>{
+          if (!userData) return false;
+          findIndexedUser = userData.userId === inputId && userData.userPwd === hashPwd
+          if(inputPwd === ""){
+            error = "비밀번호를 입력해주세요"
+            console.log("비밀번호를 입력해주세요")
+          }
+          if(inputId === ""){
+            error = "아이디를 입력해주세요"
+            console.log("아이디를 입력해주세요")
+          }
+          if(inputId !== "" && inputPwd !== ""){
+            const findUser = checkUser(inputId, inputPwd);
+            if(findUser || findIndexedUser){
+              stateData.update(state => {
+                state.loggedState = true;
+                return state;
+              })
+              todoDatas.update(vaule =>{
+                vaule.loggedID = inputId;
+                return vaule;
+              })
+            }
+          }
+        })
+      }
+      if(data.length == 0){
         if(inputPwd === ""){
           error = "비밀번호를 입력해주세요"
           console.log("비밀번호를 입력해주세요")
@@ -42,7 +67,7 @@
         }
         if(inputId !== "" && inputPwd !== ""){
           const findUser = checkUser(inputId, inputPwd);
-          if(findUser || findIndexedUser){
+          if(findUser){
             stateData.update(state => {
               state.loggedState = true;
               return state;
@@ -53,7 +78,7 @@
             })
           }
         }
-      })
+      }
     })
   }
 
