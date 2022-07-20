@@ -79,7 +79,7 @@
     const result = data.find(({setTodoList})=>{
       if (!setTodoList) return false;
       const {setTime, setDate, setUser} = setTodoList;
-      return (parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) && setUser == loggedUser)
+      return ((parseInt(setTime) === time && setDate === year+"."+(month)+'.'+(findWeekDay.weekInt) && setUser == loggedUser)||(parseInt(setTime) === time && setDate === year+"."+(weekEndDate.getMonth())+'.'+(findWeekDay.weekInt) && setUser == loggedUser))
     });
     return result;
   };
