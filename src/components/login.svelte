@@ -24,6 +24,9 @@
 
   const checkUser = (id, pwd) => {
 		const findUser = userData.find(user => user.id === id && user.pwd === pwd)
+    if(!findUser){
+      error =  "아이디 또는 비밀번호를 잘못 입력했습니다"
+    }
 		return findUser;
 	}
 
